@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/activity_main.xml -->
+<!-- LinearLayout es un contenedor que alinea a sus hijos en una sola dirección (horizontal o vertical) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"> <!-- Los elementos se colocarán uno al lado del otro -->
+
+    <!-- Contenedor para el fragmento del menú de la izquierda -->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/menu_fragment_container"
+        android:name="com.group.redesmascotas.MenuFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" /> <!-- Ocupa 1 parte del espacio total -->
+
+    <!-- Contenedor para el fragmento de contenido de la derecha -->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/content_fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2.5" /> <!-- Ocupa 2.5 partes del espacio, siendo más grande que el menú -->
+</LinearLayout>
