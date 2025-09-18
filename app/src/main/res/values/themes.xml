@@ -1,6 +1,6 @@
 <resources>
     <!-- Tema base para la app PawConnect -->
-    <style name="Theme.PawConnect" parent="Theme.MaterialComponents.DayNight">
+    <style name="Theme.PawConnect" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Color primario -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
@@ -34,6 +34,14 @@
         <item name="android:textColor">@color/white</item>
         <item name="cornerRadius">12dp</item>
         <item name="android:layout_margin">8dp</item>
+    </style>
+    
+    <!-- Estilo para el título del Toolbar -->
+    <style name="PawConnect.Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
     <style name="Theme.RedesMascotas" parent="Theme.PawConnect">
     </style>

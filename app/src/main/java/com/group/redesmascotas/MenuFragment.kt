@@ -1,20 +1,14 @@
 package com.group.redesmascotas
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.group.redesmascotas.databinding.FragmentMenuBinding
 import java.lang.ClassCastException
 
-// La clase hereda de Fragment y usa View Binding
+// La clase hereda de Fragment 
 class MenuFragment : Fragment() {
-
-    // View Binding - Variables para manejar el binding
-    private var _binding: FragmentMenuBinding? = null
-    private val binding get() = _binding!!
 
     // Define una interfaz para comunicarse con la Activity. Es un contrato.
     // La Activity que contenga este fragmento DEBE implementar esta interfaz.
@@ -24,14 +18,13 @@ class MenuFragment : Fragment() {
 
     private var listener: OnOptionClickListener? = null
 
-    // Infla la vista usando View Binding
+    // Infla la vista
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMenuBinding.inflate(inflater, container, false)
-        return binding.root
+    ): View? {
+        return inflater.inflate(R.layout.fragment_menu, container, false)
     }
 
     // Este método se llama justo después de que la vista del fragmento ha sido creada.
@@ -46,16 +39,21 @@ class MenuFragment : Fragment() {
             throw ClassCastException("$context must implement OnOptionClickListener")
         }
 
-        // Se asigna un listener a cada botón usando View Binding
-        binding.btnProfile.setOnClickListener { listener?.onOptionClicked("profile") }
-        binding.btnPhotos.setOnClickListener { listener?.onOptionClicked("photos") }
-        binding.btnVideo.setOnClickListener { listener?.onOptionClicked("video") }
-        binding.btnWeb.setOnClickListener { listener?.onOptionClicked("web") }
-    }
-
-    // Importante: Limpiar el binding cuando la vista se destruya para evitar memory leaks
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        // Se asigna un listener a cada opción del menú usando findViewById
+        view.findViewById<View>(R.id.btn_profile).setOnClickListener { 
+            listener?.onOptionClicked("profile") 
+        }
+        view.findViewById<View>(R.id.btn_photos).setOnClickListener { 
+            listener?.onOptionClicked("photos") 
+        }
+        view.findViewById<View>(R.id.btn_video).setOnClickListener { 
+            listener?.onOptionClicked("video") 
+        }
+        view.findViewById<View>(R.id.btn_web).setOnClickListener { 
+            listener?.onOptionClicked("web") 
+        }
+        view.findViewById<View>(R.id.btn_interactions).setOnClickListener { 
+            listener?.onOptionClicked("interactions") 
+        }
     }
 }
