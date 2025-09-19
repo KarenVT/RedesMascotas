@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/bookmark_item_background"
+    android:gravity="center_vertical"
+    android:clickable="true"
+    android:focusable="true">
+
+    <!-- Icono del enlace -->
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_bookmark"
+        android:layout_marginEnd="12dp"
+        android:tint="@color/primary" />
+
+    <!-- Contenido del enlace -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_bookmark_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Título del enlace"
+            android:textSize="16sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/tv_bookmark_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="https://ejemplo.com"
+            android:textSize="12sp"
+            android:textColor="@color/text_secondary"
+            android:maxLines="1"
+            android:ellipsize="middle"
+            android:layout_marginTop="2dp" />
+
+    </LinearLayout>
+
+    <!-- Categoría -->
+    <TextView
+        android:id="@+id/tv_bookmark_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Blog"
+        android:textSize="10sp"
+        android:textColor="@color/white"
+        android:background="@drawable/category_tag_background"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:layout_marginStart="8dp" />
+
+    <!-- Botón eliminar -->
+    <ImageButton
+        android:id="@+id/btn_delete_bookmark"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_delete"
+        android:background="@drawable/delete_button_background"
+        android:layout_marginStart="8dp"
+        android:scaleType="centerInside" />
+
+</LinearLayout>
+
+
+
+
+
