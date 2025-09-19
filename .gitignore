@@ -97,6 +97,7 @@ Desktop.ini
 
 # Kotlin
 *.kt.metadata
+.kotlin/
 
 # Dependencies
 node_modules/
