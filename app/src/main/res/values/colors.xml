@@ -30,4 +30,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="text_primary">#2C3E50</color>
     <color name="text_secondary">#7F8C8D</color>
+    
+    <!-- Colores para iconos -->
+    <color name="gray_icon">#6B7280</color>
+    <color name="primary_text">#1F2937</color>
+    <color name="red_like">#DC2626</color>
 </resources>
