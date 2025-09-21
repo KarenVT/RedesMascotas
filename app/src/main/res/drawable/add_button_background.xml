@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- background del boton para el fragment_web - REVISAR SI REALMENTE SE ESTA UTILIZANDO, SINO ELIMINAR-->
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="@color/accent">
     <item>

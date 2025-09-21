@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 
 // Este fragmento representa la sección de navegador web.
@@ -156,61 +157,40 @@ class WebFragment : Fragment() {
             }
         }
     }
-    
+
     private fun setupCategoryFilters() {
         btnAll.setOnClickListener { filterByCategory("Todos") }
         btnBlog.setOnClickListener { filterByCategory("Blog") }
         btnPetshop.setOnClickListener { filterByCategory("PetShop") }
         btnVeterinario.setOnClickListener { filterByCategory("Veterinario") }
-        
+
         // Inicializar con "Todos" seleccionado
         filterByCategory("Todos")
     }
     
     private fun filterByCategory(category: String) {
         currentCategory = category
-        
+
         // Reset visual de botones
         resetCategoryButtons()
-        
+
         // Marcar botón seleccionado y cambiar colores
         when (category) {
-            "Todos" -> {
-                btnAll.isSelected = true
-                btnAll.setTextColor(resources.getColor(R.color.white, null))
-            }
-            "Blog" -> {
-                btnBlog.isSelected = true
-                btnBlog.setTextColor(resources.getColor(R.color.white, null))
-            }
-            "PetShop" -> {
-                btnPetshop.isSelected = true
-                btnPetshop.setTextColor(resources.getColor(R.color.white, null))
-            }
-            "Veterinario" -> {
-                btnVeterinario.isSelected = true
-                btnVeterinario.setTextColor(resources.getColor(R.color.white, null))
-            }
+            "Todos" -> btnAll.isSelected = true
+            "Blog" -> btnBlog.isSelected = true
+            "PetShop" -> btnPetshop.isSelected = true
+            "Veterinario" -> btnVeterinario.isSelected = true
         }
-        
+
         // Actualizar la vista de bookmarks según la categoría seleccionada
         updateBookmarksDisplay()
     }
-    
+
     private fun resetCategoryButtons() {
-        val defaultTextColor = resources.getColor(R.color.text_primary, null)
-        
         btnAll.isSelected = false
-        btnAll.setTextColor(defaultTextColor)
-        
         btnBlog.isSelected = false
-        btnBlog.setTextColor(defaultTextColor)
-        
         btnPetshop.isSelected = false
-        btnPetshop.setTextColor(defaultTextColor)
-        
         btnVeterinario.isSelected = false
-        btnVeterinario.setTextColor(defaultTextColor)
     }
     
     private fun loadDefaultBookmarks() {
@@ -265,7 +245,7 @@ class WebFragment : Fragment() {
             val emptyView = TextView(context).apply {
                 text = "No hay enlaces guardados en esta categoría"
                 textSize = 14f
-                setTextColor(resources.getColor(R.color.text_secondary, null))
+                setTextColor(resources.getColor(R.color.accent, null))
                 gravity = android.view.Gravity.CENTER
                 setPadding(16, 32, 16, 32)
             }
