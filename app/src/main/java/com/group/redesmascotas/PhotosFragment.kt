@@ -83,7 +83,7 @@ class PhotosFragment : Fragment() {
 
     private fun initializeViews(view: View) {
         recyclerViewPhotos = view.findViewById(R.id.recyclerViewPhotos)
-        emptyState = view.findViewById(R.id.emptyState)
+        emptyState = view.findViewById(R.id.emptyStateContainer)
         fabAddPhoto = view.findViewById(R.id.fabAddPhoto)
         btnAllPhotos = view.findViewById(R.id.btnAllPhotos)
         btnFavorites = view.findViewById(R.id.btnFavorites)
