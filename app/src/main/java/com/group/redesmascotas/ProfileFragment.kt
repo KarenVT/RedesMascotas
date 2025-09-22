@@ -11,6 +11,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.google.android.material.card.MaterialCardView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
 import com.group.redesmascotas.database.ProfileEntity
@@ -30,6 +31,7 @@ class ProfileFragment : Fragment() {
     private lateinit var ownerNameText: TextView
     private lateinit var petInterestsText: TextView
     private lateinit var emptyStateMessage: TextView
+    private lateinit var emptyStateContainer: com.google.android.material.card.MaterialCardView
     
     // Botones de edición
     private lateinit var editInfoButton: ImageButton
@@ -90,6 +92,7 @@ class ProfileFragment : Fragment() {
         ownerNameText = view.findViewById(R.id.ownerName)
         petInterestsText = view.findViewById(R.id.petInterests)
         emptyStateMessage = view.findViewById(R.id.emptyStateMessage)
+        emptyStateContainer = view.findViewById(R.id.emptyStateContainer)
         
         // Inicializar botones de edición
         editInfoButton = view.findViewById(R.id.editInfoButton)
@@ -145,7 +148,7 @@ class ProfileFragment : Fragment() {
     }
     
     private fun showEmptyState() {
-        emptyStateMessage.visibility = View.VISIBLE
+        emptyStateContainer.visibility = View.VISIBLE
         
         // Mostrar placeholders con colores de texto secundario
         displayFieldData(petNameText, null, getString(R.string.profile_pet_name_placeholder))
@@ -159,7 +162,7 @@ class ProfileFragment : Fragment() {
     }
     
     private fun showProfileData(profile: ProfileEntity) {
-        emptyStateMessage.visibility = View.GONE
+        emptyStateContainer.visibility = View.GONE
         
         // Mostrar datos del perfil con colores de texto primario
         displayFieldData(petNameText, profile.petName, getString(R.string.profile_pet_name_placeholder))
@@ -175,7 +178,8 @@ class ProfileFragment : Fragment() {
     private fun displayFieldData(textView: TextView, data: String?, placeholder: String) {
         if (data.isNullOrEmpty()) {
             textView.text = placeholder
-            textView.setTextColor(resources.getColor(R.color.text_secondary, null))
+            textView.setTextColor(resources.getColor(R.color.profile_empty_text, null))
+            textView.setTypeface(textView.typeface, android.graphics.Typeface.NORMAL)
         } else {
             textView.text = data
             textView.setTextColor(resources.getColor(R.color.text_primary, null))
