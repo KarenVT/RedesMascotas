@@ -32,6 +32,10 @@
     <string name="profile_empty_state">Completa tu perfil para una mejor experiencia en PawConnect</string>
     <string name="profile_error_loading">Error al cargar el perfil</string>
     <string name="profile_error_saving">Error al guardar los datos</string>
+    <string name="profile_change_image">Cambiar foto de perfil</string>
+    <string name="profile_image_updated">Foto de perfil actualizada</string>
+    <string name="profile_image_error">Error al actualizar la foto</string>
+    <string name="profile_permission_needed">Se necesita permiso para acceder a las fotos</string>
     
     <!-- Strings de la sección Fotos -->
     <string name="photos_title">Fotos</string>

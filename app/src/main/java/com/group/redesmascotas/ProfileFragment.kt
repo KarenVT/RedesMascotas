@@ -1,22 +1,23 @@
 package com.group.redesmascotas
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-
-// Clase de datos para el perfil de la mascota
-data class PetProfile(
-    val petName: String,
-    val petBreed: String,
-    val petAge: String,
-    val ownerName: String,
-    val interests: String,
-    val profileImageResource: Int = R.drawable.ic_paw_logo
-)
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.lifecycleScope
+import com.group.redesmascotas.database.ProfileEntity
+import com.group.redesmascotas.database.AllDatabase
+import com.group.redesmascotas.repository.ProfileRepository
+import com.group.redesmascotas.utils.ImageUtils
+import kotlinx.coroutines.launch
 
 // Este fragmento representa la sección de perfil de la mascota
 class ProfileFragment : Fragment() {
@@ -28,9 +29,28 @@ class ProfileFragment : Fragment() {
     private lateinit var petAgeText: TextView
     private lateinit var ownerNameText: TextView
     private lateinit var petInterestsText: TextView
+    private lateinit var emptyStateMessage: TextView
     
-    // Datos del perfil (se pueden cargar desde una base de datos o API en el futuro)
-    private lateinit var currentProfile: PetProfile
+    // Botones de edición
+    private lateinit var editInfoButton: ImageButton
+    private lateinit var editOwnerButton: ImageButton
+    private lateinit var editInterestsButton: ImageButton
+    private lateinit var changeProfileImageButton: ImageButton
+    
+    // Repository para manejar datos del perfil
+    private lateinit var profileRepository: ProfileRepository
+    
+    // Perfil actual cargado desde la base de datos
+    private var currentProfile: ProfileEntity? = null
+    
+    // Launcher para seleccionar imagen de la galería
+    private val imagePickerLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
+        uri?.let { 
+            updateProfileImage(it)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,59 +63,321 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        // Inicializar el perfil con datos por defecto desde strings.xml
-        initializeProfile()
+        // Inicializar Repository
+        initializeRepository()
         
         // Inicializar las vistas
         initializeViews(view)
         
-        // Configurar los datos del perfil
-        setupProfileData()
+        // Configurar los listeners de los botones
+        setupButtonListeners()
+        
+        // Cargar y observar los datos del perfil
+        observeProfileData()
     }
     
-    private fun initializeProfile() {
-        // Inicializar el perfil con datos por defecto desde resources
-        currentProfile = PetProfile(
-            petName = getString(R.string.profile_pet_name_default),
-            petBreed = getString(R.string.profile_pet_breed_default),
-            petAge = getString(R.string.profile_pet_age_default),
-            ownerName = getString(R.string.profile_owner_name_default),
-            interests = getString(R.string.profile_interests_default)
-        )
+    private fun initializeRepository() {
+        val database = AllDatabase.getDatabase(requireContext())
+        profileRepository = ProfileRepository(database.profileDao(), requireContext())
     }
     
     private fun initializeViews(view: View) {
+        // Inicializar vistas de texto
         profileImage = view.findViewById(R.id.profileImage)
         petNameText = view.findViewById(R.id.petName)
         petBreedText = view.findViewById(R.id.petBreed)
         petAgeText = view.findViewById(R.id.petAge)
         ownerNameText = view.findViewById(R.id.ownerName)
         petInterestsText = view.findViewById(R.id.petInterests)
+        emptyStateMessage = view.findViewById(R.id.emptyStateMessage)
+        
+        // Inicializar botones de edición
+        editInfoButton = view.findViewById(R.id.editInfoButton)
+        editOwnerButton = view.findViewById(R.id.editOwnerButton)
+        editInterestsButton = view.findViewById(R.id.editInterestsButton)
+        changeProfileImageButton = view.findViewById(R.id.changeProfileImageButton)
     }
     
-    private fun setupProfileData() {
-        // Configurar la imagen de perfil
-        profileImage.setImageResource(currentProfile.profileImageResource)
+    private fun setupButtonListeners() {
+        editInfoButton.setOnClickListener { 
+            showEditInfoDialog() 
+        }
         
-        // Configurar los textos con los datos del perfil
-        petNameText.text = currentProfile.petName
-        petBreedText.text = currentProfile.petBreed
-        petAgeText.text = currentProfile.petAge
-        ownerNameText.text = currentProfile.ownerName
-        petInterestsText.text = currentProfile.interests
+        editOwnerButton.setOnClickListener { 
+            showEditOwnerDialog() 
+        }
+        
+        editInterestsButton.setOnClickListener { 
+            showEditInterestsDialog() 
+        }
+        
+        changeProfileImageButton.setOnClickListener {
+            openImagePicker()
+        }
     }
     
-    // Método para actualizar el perfil (útil para futuras funcionalidades)
-    fun updateProfile(newProfile: PetProfile) {
-        // Se pueden agregar validaciones aquí
+    private fun observeProfileData() {
+        // Observar cambios en el perfil usando Flow
+        lifecycleScope.launch {
+            profileRepository.getProfile().collect { profile ->
+                currentProfile = profile
+                updateUI(profile)
+            }
+        }
+    }
+    
+    private fun updateUI(profile: ProfileEntity?) {
+        if (profile == null || isProfileEmpty(profile)) {
+            // Mostrar estado vacío
+            showEmptyState()
+        } else {
+            // Mostrar datos del perfil
+            showProfileData(profile)
+        }
+    }
+    
+    private fun isProfileEmpty(profile: ProfileEntity): Boolean {
+        return profile.petName.isEmpty() && 
+               profile.petBreed.isEmpty() && 
+               profile.petAge.isEmpty() && 
+               profile.ownerName.isEmpty() && 
+               profile.interests.isEmpty()
+    }
+    
+    private fun showEmptyState() {
+        emptyStateMessage.visibility = View.VISIBLE
         
-        // Actualizar la UI con los nuevos datos
-        profileImage.setImageResource(newProfile.profileImageResource)
-        petNameText.text = newProfile.petName
-        petBreedText.text = newProfile.petBreed
-        petAgeText.text = newProfile.petAge
-        ownerNameText.text = newProfile.ownerName
-        petInterestsText.text = newProfile.interests
+        // Mostrar placeholders con colores de texto secundario
+        displayFieldData(petNameText, null, getString(R.string.profile_pet_name_placeholder))
+        displayFieldData(petBreedText, null, getString(R.string.profile_pet_breed_placeholder))
+        displayFieldData(petAgeText, null, getString(R.string.profile_pet_age_placeholder))
+        displayFieldData(ownerNameText, null, getString(R.string.profile_owner_name_placeholder))
+        displayFieldData(petInterestsText, null, getString(R.string.profile_interests_placeholder))
+        
+        // Configurar imagen por defecto
+        loadProfileImage("")
+    }
+    
+    private fun showProfileData(profile: ProfileEntity) {
+        emptyStateMessage.visibility = View.GONE
+        
+        // Mostrar datos del perfil con colores de texto primario
+        displayFieldData(petNameText, profile.petName, getString(R.string.profile_pet_name_placeholder))
+        displayFieldData(petBreedText, profile.petBreed, getString(R.string.profile_pet_breed_placeholder))
+        displayFieldData(petAgeText, profile.petAge, getString(R.string.profile_pet_age_placeholder))
+        displayFieldData(ownerNameText, profile.ownerName, getString(R.string.profile_owner_name_placeholder))
+        displayFieldData(petInterestsText, profile.interests, getString(R.string.profile_interests_placeholder))
+        
+        // Configurar imagen de perfil
+        loadProfileImage(profile.profileImagePath)
+    }
+    
+    private fun displayFieldData(textView: TextView, data: String?, placeholder: String) {
+        if (data.isNullOrEmpty()) {
+            textView.text = placeholder
+            textView.setTextColor(resources.getColor(R.color.text_secondary, null))
+        } else {
+            textView.text = data
+            textView.setTextColor(resources.getColor(R.color.text_primary, null))
+            textView.setTypeface(textView.typeface, android.graphics.Typeface.BOLD)
+        }
+    }
+    
+    private fun showEditInfoDialog() {
+        // Mostrar diálogos secuenciales para la información de la mascota
+        showEditFieldDialog(
+            getString(R.string.profile_edit_pet_name),
+            getString(R.string.profile_pet_name_placeholder),
+            currentProfile?.petName ?: ""
+        ) { newPetName ->
+            showEditBreedDialog(newPetName)
+        }
+    }
+    
+    private fun showEditBreedDialog(petName: String) {
+        showEditFieldDialog(
+            getString(R.string.profile_edit_pet_breed),
+            getString(R.string.profile_pet_breed_placeholder),
+            currentProfile?.petBreed ?: ""
+        ) { newPetBreed ->
+            showEditAgeDialog(petName, newPetBreed)
+        }
+    }
+    
+    private fun showEditAgeDialog(petName: String, petBreed: String) {
+        showEditFieldDialog(
+            getString(R.string.profile_edit_pet_age),
+            getString(R.string.profile_pet_age_placeholder),
+            currentProfile?.petAge ?: ""
+        ) { newPetAge ->
+            saveInfoData(petName, petBreed, newPetAge)
+        }
+    }
+    
+    private fun showEditFieldDialog(
+        title: String, 
+        hint: String, 
+        currentValue: String, 
+        onSave: (String) -> Unit
+    ) {
+        val editText = EditText(requireContext()).apply {
+            this.hint = hint
+            setText(currentValue)
+            setPadding(50, 30, 50, 30)
+        }
+        
+        AlertDialog.Builder(requireContext())
+            .setTitle(title)
+            .setView(editText)
+            .setPositiveButton(getString(R.string.profile_save_button)) { _, _ ->
+                val newValue = editText.text.toString().trim()
+                if (newValue.isNotEmpty()) {
+                    onSave(newValue)
+                } else {
+                    showErrorMessage(getString(R.string.profile_field_required))
+                }
+            }
+            .setNegativeButton(getString(R.string.profile_cancel_button), null)
+            .show()
+    }
+    
+    private fun showEditOwnerDialog() {
+        showEditFieldDialog(
+            getString(R.string.profile_edit_owner_name),
+            getString(R.string.profile_owner_name_placeholder),
+            currentProfile?.ownerName ?: ""
+        ) { newValue ->
+            lifecycleScope.launch {
+                val result = profileRepository.updateOwnerName(newValue)
+                if (result.isSuccess) {
+                    showSuccessMessage()
+                } else {
+                    showErrorMessage(getString(R.string.profile_error_saving))
+                }
+            }
+        }
+    }
+    
+    private fun showEditInterestsDialog() {
+        showEditFieldDialog(
+            getString(R.string.profile_edit_interests),
+            getString(R.string.profile_interests_placeholder),
+            currentProfile?.interests ?: ""
+        ) { newValue ->
+            lifecycleScope.launch {
+                val result = profileRepository.updateInterests(newValue)
+                if (result.isSuccess) {
+                    showSuccessMessage()
+                } else {
+                    showErrorMessage(getString(R.string.profile_error_saving))
+                }
+            }
+        }
+    }
+    
+    private fun saveInfoData(petName: String, petBreed: String, petAge: String) {
+        lifecycleScope.launch {
+            val result = if (currentProfile != null) {
+                // Actualizar perfil existente manteniendo otros datos
+                profileRepository.saveProfile(
+                    petName = petName,
+                    petBreed = petBreed,
+                    petAge = petAge,
+                    ownerName = currentProfile!!.ownerName,
+                    interests = currentProfile!!.interests,
+                    profileImagePath = currentProfile!!.profileImagePath
+                )
+            } else {
+                // Crear nuevo perfil
+                profileRepository.saveProfile(
+                    petName = petName,
+                    petBreed = petBreed,
+                    petAge = petAge,
+                    ownerName = "",
+                    interests = "",
+                    profileImagePath = ""
+                )
+            }
+            
+            if (result.isSuccess) {
+                showSuccessMessage()
+            } else {
+                showErrorMessage(getString(R.string.profile_error_saving))
+            }
+        }
+    }
+    
+    private fun showSuccessMessage() {
+        Toast.makeText(requireContext(), getString(R.string.profile_updated_success), Toast.LENGTH_SHORT).show()
+    }
+    
+    private fun showErrorMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+    
+    // Abrir selector de imagen
+    private fun openImagePicker() {
+        try {
+            imagePickerLauncher.launch("image/*")
+        } catch (e: Exception) {
+            showErrorMessage("Error al abrir la galería")
+        }
+    }
+    
+    // Actualizar imagen de perfil
+    private fun updateProfileImage(uri: android.net.Uri) {
+        lifecycleScope.launch {
+            try {
+                val result = profileRepository.updateProfileImage(uri)
+                if (result.isSuccess) {
+                    val imagePath = result.getOrNull()
+                    if (imagePath != null) {
+                        loadProfileImage(imagePath)
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.profile_image_updated),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    showErrorMessage(getString(R.string.profile_image_error))
+                }
+            } catch (e: Exception) {
+                showErrorMessage(getString(R.string.profile_image_error))
+            }
+        }
+    }
+    
+    // Cargar imagen de perfil
+    private fun loadProfileImage(imagePath: String) {
+        if (imagePath.isNotEmpty() && ImageUtils.imageExists(imagePath)) {
+            try {
+                val bitmap = ImageUtils.loadImageFromInternalStorage(imagePath)
+                if (bitmap != null) {
+                    profileImage.setImageBitmap(bitmap)
+                } else {
+                    profileImage.setImageResource(R.drawable.ic_paw_logo)
+                }
+            } catch (e: Exception) {
+                profileImage.setImageResource(R.drawable.ic_paw_logo)
+            }
+        } else {
+            profileImage.setImageResource(R.drawable.ic_paw_logo)
+        }
+    }
+    
+    // Método para limpiar todos los datos del perfil (útil para testing o reset)
+    fun clearProfileData() {
+        lifecycleScope.launch {
+            // Eliminar imagen de perfil si existe
+            currentProfile?.let { profile ->
+                if (profile.profileImagePath.isNotEmpty()) {
+                    ImageUtils.deleteImageFromInternalStorage(profile.profileImagePath)
+                }
+            }
+            // Limpiar datos de la base de datos
+            profileRepository.clearProfile()
+        }
     }
     
     // Método estático para crear una nueva instancia del fragmento

@@ -20,7 +20,19 @@
             android:textColor="@color/text_primary"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="16dp" />
+
+        <!-- Mensaje de estado vacío -->
+        <TextView
+            android:id="@+id/emptyStateMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_empty_state"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"
+            android:visibility="gone" />
 
         <!-- Sección de Información -->
         <LinearLayout
@@ -31,25 +43,60 @@
             android:padding="16dp"
             android:layout_marginBottom="16dp">
 
-            <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/profile_info_section"
+                    android:textSize="18sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/editInfoButton"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/edit_button_background"
+                    android:src="@drawable/ic_edit"
+                    android:contentDescription="@string/profile_edit_button"
+                    android:scaleType="centerInside" />
+
+            </LinearLayout>
+
+            <!-- Imagen de perfil con botón de cámara -->
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/profile_info_section"
-                android:textSize="18sp"
-                android:textColor="@color/text_primary"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp" />
-
-            <!-- Imagen de perfil -->
-            <ImageView
-                android:id="@+id/profileImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/profile_picture_background"
-                android:src="@drawable/ic_paw_logo"
-                android:scaleType="centerInside"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:id="@+id/profileImage"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/profile_picture_background"
+                    android:src="@drawable/ic_paw_logo"
+                    android:scaleType="centerCrop" />
+
+                <ImageButton
+                    android:id="@+id/changeProfileImageButton"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/camera_button_background"
+                    android:src="@drawable/ic_camera"
+                    android:contentDescription="@string/profile_change_image"
+                    android:scaleType="centerInside" />
+
+            </FrameLayout>
 
             <!-- Información de la mascota -->
             <LinearLayout
@@ -78,14 +125,16 @@
                         android:textSize="12sp"
                         android:textColor="@color/text_secondary" />
 
-                    <TextView
+                     <TextView
                         android:id="@+id/petName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/profile_pet_name_default"
+                        android:text="@string/profile_pet_name_placeholder"
                         android:textSize="16sp"
-                        android:textColor="@color/text_primary"
-                        android:textStyle="bold" />
+                        android:textColor="@color/text_secondary"
+                        android:textStyle="normal"
+                        android:minHeight="24dp"
+                        android:gravity="center_vertical" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -116,14 +165,16 @@
                         android:textSize="12sp"
                         android:textColor="@color/text_secondary" />
 
-                    <TextView
+                     <TextView
                         android:id="@+id/petBreed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/profile_pet_breed_default"
+                        android:text="@string/profile_pet_breed_placeholder"
                         android:textSize="16sp"
-                        android:textColor="@color/text_primary"
-                        android:textStyle="bold" />
+                        android:textColor="@color/text_secondary"
+                        android:textStyle="normal"
+                        android:minHeight="24dp"
+                        android:gravity="center_vertical" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -155,14 +206,16 @@
                         android:textSize="12sp"
                         android:textColor="@color/text_secondary" />
 
-                    <TextView
+                     <TextView
                         android:id="@+id/petAge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/profile_pet_age_default"
+                        android:text="@string/profile_pet_age_placeholder"
                         android:textSize="16sp"
-                        android:textColor="@color/text_primary"
-                        android:textStyle="bold" />
+                        android:textColor="@color/text_secondary"
+                        android:textStyle="normal"
+                        android:minHeight="24dp"
+                        android:gravity="center_vertical" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -178,14 +231,31 @@
             android:padding="16dp"
             android:layout_marginBottom="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+             <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/profile_owner_section"
-                android:textSize="18sp"
-                android:textColor="@color/text_primary"
-                android:textStyle="bold"
-                android:layout_marginBottom="12dp" />
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/profile_owner_section"
+                    android:textSize="18sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/editOwnerButton"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/edit_button_background"
+                    android:src="@drawable/ic_edit"
+                    android:contentDescription="@string/profile_edit_button"
+                    android:scaleType="centerInside" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -212,14 +282,16 @@
                         android:textSize="12sp"
                         android:textColor="@color/text_secondary" />
 
-                    <TextView
+                     <TextView
                         android:id="@+id/ownerName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/profile_owner_name_default"
+                        android:text="@string/profile_owner_name_placeholder"
                         android:textSize="16sp"
-                        android:textColor="@color/text_primary"
-                        android:textStyle="bold" />
+                        android:textColor="@color/text_secondary"
+                        android:textStyle="normal"
+                        android:minHeight="24dp"
+                        android:gravity="center_vertical" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -234,14 +306,31 @@
             android:background="@drawable/profile_section_background"
             android:padding="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+             <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/profile_interests_section"
-                android:textSize="18sp"
-                android:textColor="@color/text_primary"
-                android:textStyle="bold"
-                android:layout_marginBottom="12dp" />
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/profile_interests_section"
+                    android:textSize="18sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/editInterestsButton"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/edit_button_background"
+                    android:src="@drawable/ic_edit"
+                    android:contentDescription="@string/profile_edit_button"
+                    android:scaleType="centerInside" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -257,17 +346,19 @@
                     android:layout_marginEnd="8dp"
                     android:layout_gravity="center_vertical" />
 
-                <TextView
+                 <TextView
                     android:id="@+id/petInterests"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/profile_interests_default"
+                    android:text="@string/profile_interests_placeholder"
                     android:textSize="16sp"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/text_secondary"
                     android:background="@drawable/category_tag_background"
                     android:padding="8dp"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:minHeight="32dp"
+                    android:gravity="center" />
 
             </LinearLayout>
 
