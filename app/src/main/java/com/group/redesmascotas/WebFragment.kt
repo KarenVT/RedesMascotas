@@ -99,7 +99,14 @@ class WebFragment : Fragment() {
             useWideViewPort = true
             builtInZoomControls = true
             displayZoomControls = false
+            
+            // Configuraciones para scroll compatible
+            setSupportZoom(true)
+            
         }
+        
+        // Configurar scroll anidado compatible
+        webView.isNestedScrollingEnabled = true
         
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
@@ -110,6 +117,21 @@ class WebFragment : Fragment() {
                     updateNavigationButtons()
                 }
             }
+        }
+        
+        // Manejar gestos de scroll para mejor compatibilidad
+        webView.setOnTouchListener { v, event ->
+            when (event.action) {
+                android.view.MotionEvent.ACTION_DOWN -> {
+                    // Permitir que el WebView maneje su propio scroll
+                    v.parent.requestDisallowInterceptTouchEvent(true)
+                }
+                android.view.MotionEvent.ACTION_UP, android.view.MotionEvent.ACTION_CANCEL -> {
+                    // Devolver control al NestedScrollView cuando termine el gesto
+                    v.parent.requestDisallowInterceptTouchEvent(false)
+                }
+            }
+            false
         }
     }
     
@@ -299,7 +321,7 @@ class WebFragment : Fragment() {
                 tvCategory.setBackgroundColor(resources.getColor(R.color.accent, null))
             }
             "Veterinario" -> {
-                tvCategory.setBackgroundColor(resources.getColor(R.color.mustard_yellow, null))
+                tvCategory.setBackgroundColor(resources.getColor(R.color.background, null))
             }
             else -> tvCategory.setBackgroundResource(R.drawable.category_tag_background)
         }
