@@ -30,14 +30,14 @@ import kotlinx.coroutines.launch
 class VideoFragment : Fragment() {
     
     // Views del layout
-    private lateinit var btnSelectVideo: Button
-    private lateinit var layoutVideoPlayer: LinearLayout
+    private lateinit var btnSelectVideo: com.google.android.material.button.MaterialButton
+    private lateinit var layoutVideoPlayer: com.google.android.material.card.MaterialCardView
     private lateinit var videoView: VideoView
     private lateinit var layoutVideoLoading: LinearLayout
     private lateinit var customMediaController: CustomMediaController
     private lateinit var recyclerViewVideos: RecyclerView
-    private lateinit var layoutNoVideos: LinearLayout
-    private lateinit var tvUploadedVideosLabel: TextView
+    private lateinit var layoutNoVideos: com.google.android.material.card.MaterialCardView
+    private lateinit var tvUploadedVideosLabel: LinearLayout
     
     // Repositorio para persistencia
     private lateinit var videoRepository: VideoRepository
