@@ -1,37 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- PawConnect Paleta de colores -->
-    <!-- Azul petróleo -->
-    <color name="petrol_blue">#2C3E50</color>
-    <color name="primary">#2C3E50</color>
-    <color name="primary_dark">#1A252F</color>
+    <!-- Azul fuerte -->
+<color name="blue_primary">#44749D</color>
+<color name="primary">#44749D</color>
+<color name="primary_dark">#2E5370</color> <!-- versión más oscura -->
+
+<!-- Azul claro -->
+<color name="blue_light">#C6D4E1</color>
+<color name="secondary">#C6D4E1</color>
+<color name="secondary_light">#E0ECF4</color>
+
+<!-- Blanco -->
+<color name="pure_white">#FFFFFF</color>
+<color name="surface">#FFFFFF</color>
+
+<!-- Gris muy claro -->
+<color name="soft_gray">#EBE7E0</color>
+<color name="background">#EBE7E0</color>
+
+<!-- Beige / Gris cálido -->
+<color name="warm_beige">#BDB8AD</color>
+<color name="accent">#BDB8AD</color>
+
+<!-- Nuevos colores para gradientes y sombras -->
+<color name="gradient_start">#44749D</color>
+<color name="gradient_end">#C6D4E1</color>
+<color name="modern_shadow">#BDB8AD99</color> <!-- 60% opacidad -->
+
+<!-- Card background -->
+<color name="card_background">#EBE7E0</color>
+
+<!-- Texto -->
+<color name="text_primary">#2C3E50</color>
+<color name="text_secondary">#7F8C8D</color>
+
+<!-- Base -->
+<color name="black">#FF000000</color>
+<color name="white">#FFFFFFFF</color>
     
-    <!-- Verde esmeralda -->
-    <color name="emerald_green">#27AE60</color>
-    <color name="secondary">#27AE60</color>
-    <color name="secondary_light">#2ECC71</color>
+    <!-- Colores específicos para perfil - Paleta azul/beige -->
+    <color name="profile_card_background">@color/pure_white</color>
+    <color name="profile_section_border">@color/soft_gray</color>
+    <color name="profile_empty_text">@color/warm_beige</color>
+    <color name="profile_button_pressed">@color/primary_dark</color>
+    <color name="profile_shadow">@color/modern_shadow</color>
+    <color name="profile_accent_light">@color/secondary_light</color>
     
-    <!-- Naranja brillante -->
-    <color name="bright_orange">#E67E22</color>
-    <color name="accent">#E67E22</color>
-    <color name="accent_light">#F39C12</color>
-    
-    <!-- Amarillo mostaza -->
-    <color name="mustard_yellow">#F1C40F</color>
-    <color name="energy">#F1C40F</color>
-    
-    <!-- Blanco humo fondo -->
-    <color name="smoke_white">#FAFAFA</color>
-    <color name="background">#FAFAFA</color>
-    <color name="surface">#FFFFFF</color>
-    
-    <!-- Colores adicionales -->
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="text_primary">#2C3E50</color>
-    <color name="text_secondary">#7F8C8D</color>
-    
-    <!-- Colores para iconos -->
+    <!-- Gradientes y elevaciones - Nueva paleta -->
+    <color name="surface_elevation_1">@color/secondary_light</color>
+    <color name="surface_elevation_2">@color/soft_gray</color>
+    <color name="divider_color">@color/warm_beige</color>
+
     <color name="gray_icon">#6B7280</color>
     <color name="primary_text">#1F2937</color>
     <color name="red_like">#DC2626</color>

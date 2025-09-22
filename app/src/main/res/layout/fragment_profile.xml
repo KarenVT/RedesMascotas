@@ -1,47 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    android:fillViewport="true">
+    android:orientation="vertical"
+     android:background="@color/white">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+     <!-- Header mejorado con gradiente -->
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="vertical"
+         android:background="@drawable/profile_header_background"
+         android:padding="24dp"
+         android:gravity="center">
+
+         <!-- Icono del perfil -->
+         <ImageView
+             android:layout_width="56dp"
+             android:layout_height="56dp"
+             android:src="@drawable/ic_profile"
+             android:layout_marginBottom="12dp"
+             android:tint="@color/white" />
+
+         <!-- Título principal -->
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="@string/profile_title"
+             android:textSize="28sp"
+             android:textColor="@color/white"
+             android:textStyle="bold"
+             android:fontFamily="sans-serif-medium"
+             android:layout_marginBottom="6dp" />
+
+         <!-- Subtítulo -->
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+             android:text="Perfil de tu mascota"
+             android:textSize="16sp"
+             android:textColor="@color/white"
+             android:alpha="0.9" />
 
-        <!-- Título del perfil -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_title"
-            android:textSize="28sp"
-            android:textColor="@color/text_primary"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="16dp" />
+     </LinearLayout>
 
-        <!-- Mensaje de estado vacío -->
-        <TextView
-            android:id="@+id/emptyStateMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_empty_state"
-            android:textSize="14sp"
-            android:textColor="@color/text_secondary"
-            android:gravity="center"
-            android:layout_marginBottom="24dp"
-            android:visibility="gone" />
+     <!-- Contenido desplazable -->
+     <ScrollView
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="1"
+         android:fillViewport="true">
 
-        <!-- Sección de Información -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/profile_section_background"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp">
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical"
+             android:padding="20dp">
+
+         <!-- Mensaje de estado vacío aesthetic -->
+         <com.google.android.material.card.MaterialCardView
+             android:id="@+id/emptyStateContainer"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:padding="28dp"
+             app:cardCornerRadius="16dp"
+             app:cardElevation="4dp"
+             app:cardBackgroundColor="@color/card_background"
+             app:cardUseCompatPadding="true">
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical"
+                 android:padding="32dp"
+                 android:gravity="center">
+
+             <ImageView
+                 android:layout_width="64dp"
+                 android:layout_height="64dp"
+                 android:src="@drawable/ic_paw_logo"
+                 android:layout_marginBottom="16dp"
+                 android:tint="@color/warm_beige"
+                 android:alpha="0.7" />
+
+             <TextView
+                 android:id="@+id/emptyStateMessage"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/profile_empty_state"
+                 android:textSize="16sp"
+                 android:textColor="@color/warm_beige"
+                 android:fontFamily="sans-serif"
+                 android:gravity="center"
+                 android:lineSpacingExtra="4dp" />
+
+             </LinearLayout>
+
+         </com.google.android.material.card.MaterialCardView>
+
+         <!-- Sección de Información -->
+         <com.google.android.material.card.MaterialCardView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:padding="28dp"
+             app:cardCornerRadius="16dp"
+             app:cardElevation="4dp"
+             app:cardBackgroundColor="@color/white"
+             app:cardUseCompatPadding="true">
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical"
+                 android:padding="28dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,54 +121,58 @@
                 android:orientation="horizontal"
                 android:layout_marginBottom="16dp">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/profile_info_section"
-                    android:textSize="18sp"
-                    android:textColor="@color/text_primary"
-                    android:textStyle="bold" />
+    <TextView
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     style="@style/ProfileSectionTitle"
+                     android:text="@string/profile_info_section"
+                     android:layout_marginBottom="0dp" />
 
                 <ImageButton
                     android:id="@+id/editInfoButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
                     android:background="@drawable/edit_button_background"
                     android:src="@drawable/ic_edit"
+                    android:scaleType="centerInside"
+                    android:elevation="6dp"
                     android:contentDescription="@string/profile_edit_button"
-                    android:scaleType="centerInside" />
+                    android:tint="@color/white" />
 
             </LinearLayout>
 
-            <!-- Imagen de perfil con botón de cámara -->
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="16dp">
+             <!-- Imagen de perfil hero con botón de cámara -->
+             <FrameLayout
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center_horizontal"
+                 android:layout_marginBottom="32dp">
 
-                <ImageView
-                    android:id="@+id/profileImage"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:background="@drawable/profile_picture_background"
-                    android:src="@drawable/ic_paw_logo"
-                    android:scaleType="centerCrop" />
+                 <ImageView
+                     android:id="@+id/profileImage"
+                     android:layout_width="150dp"
+                     android:layout_height="150dp"
+                     android:background="@drawable/profile_image_hero_background"
+                     android:src="@drawable/ic_paw_logo"
+                     android:scaleType="centerCrop"
+                     android:layout_margin="12dp" />
 
-                <ImageButton
-                    android:id="@+id/changeProfileImageButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:background="@drawable/camera_button_background"
-                    android:src="@drawable/ic_camera"
-                    android:contentDescription="@string/profile_change_image"
-                    android:scaleType="centerInside" />
+                 <ImageButton
+                     android:id="@+id/changeProfileImageButton"
+                     android:layout_width="48dp"
+                     android:layout_height="48dp"
+                     android:layout_gravity="bottom|end"
+                     android:layout_marginBottom="14dp"
+                     android:layout_marginEnd="14dp"
+                      android:background="@drawable/camera_button_background"
+                     android:src="@drawable/ic_camera"
+                     android:contentDescription="@string/profile_change_image"
+                     android:scaleType="centerInside"
+                     android:elevation="8dp"
+                     android:tint="@color/white" />
 
-            </FrameLayout>
+             </FrameLayout>
 
             <!-- Información de la mascota -->
             <LinearLayout
@@ -118,23 +194,15 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/profile_name_label"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_secondary" />
+                     <TextView
+                         style="@style/ProfileFieldLabel"
+                         android:text="@string/profile_name_label" />
 
                      <TextView
-                        android:id="@+id/petName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/profile_pet_name_placeholder"
-                        android:textSize="16sp"
-                        android:textColor="@color/text_secondary"
-                        android:textStyle="normal"
-                        android:minHeight="24dp"
-                        android:gravity="center_vertical" />
+                         android:id="@+id/petName"
+                         style="@style/ProfileFieldValue"
+                         android:text="@string/profile_pet_name_placeholder"
+                         android:textColor="@color/profile_empty_text" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -158,23 +226,15 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/profile_breed_label"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_secondary" />
+                     <TextView
+                         style="@style/ProfileFieldLabel"
+                         android:text="@string/profile_breed_label" />
 
                      <TextView
-                        android:id="@+id/petBreed"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/profile_pet_breed_placeholder"
-                        android:textSize="16sp"
-                        android:textColor="@color/text_secondary"
-                        android:textStyle="normal"
-                        android:minHeight="24dp"
-                        android:gravity="center_vertical" />
+                         android:id="@+id/petBreed"
+                         style="@style/ProfileFieldValue"
+                         android:text="@string/profile_pet_breed_placeholder"
+                         android:textColor="@color/profile_empty_text" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -199,37 +259,38 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/profile_age_label"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_secondary" />
+                     <TextView
+                         style="@style/ProfileFieldLabel"
+                         android:text="@string/profile_age_label" />
 
                      <TextView
-                        android:id="@+id/petAge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/profile_pet_age_placeholder"
-                        android:textSize="16sp"
-                        android:textColor="@color/text_secondary"
-                        android:textStyle="normal"
-                        android:minHeight="24dp"
-                        android:gravity="center_vertical" />
+                         android:id="@+id/petAge"
+                         style="@style/ProfileFieldValue"
+                         android:text="@string/profile_pet_age_placeholder"
+                         android:textColor="@color/profile_empty_text" />
 
                 </LinearLayout>
             </LinearLayout>
 
-        </LinearLayout>
+             </LinearLayout>
 
-        <!-- Sección del Dueño -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/profile_section_background"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp">
+         </com.google.android.material.card.MaterialCardView>
+
+         <!-- Sección del Dueño -->
+             <com.google.android.material.card.MaterialCardView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:padding="28dp"
+                 app:cardCornerRadius="16dp"
+                 app:cardElevation="4dp"
+                 app:cardBackgroundColor="@color/white"
+                 app:cardUseCompatPadding="true">
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical"
+                 android:padding="28dp">
 
              <LinearLayout
                 android:layout_width="match_parent"
@@ -237,23 +298,24 @@
                 android:orientation="horizontal"
                 android:layout_marginBottom="12dp">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/profile_owner_section"
-                    android:textSize="18sp"
-                    android:textColor="@color/text_primary"
-                    android:textStyle="bold" />
+                 <TextView
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     style="@style/ProfileSectionTitle"
+                     android:text="@string/profile_owner_section"
+                     android:layout_marginBottom="0dp" />
 
-                <ImageButton
-                    android:id="@+id/editOwnerButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@drawable/edit_button_background"
-                    android:src="@drawable/ic_edit"
-                    android:contentDescription="@string/profile_edit_button"
-                    android:scaleType="centerInside" />
+                 <ImageButton
+                     android:id="@+id/editOwnerButton"
+                     android:layout_width="38dp"
+                     android:layout_height="38dp"
+                     android:background="@drawable/edit_button_background"
+                     android:src="@drawable/ic_edit"
+                     android:scaleType="centerInside"
+                     android:elevation="6dp"
+                     android:contentDescription="@string/profile_edit_button"
+                     android:tint="@color/white" />
 
             </LinearLayout>
 
@@ -275,36 +337,38 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/profile_name_label"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_secondary" />
+                     <TextView
+                         style="@style/ProfileFieldLabel"
+                         android:text="@string/profile_name_label" />
 
                      <TextView
-                        android:id="@+id/ownerName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/profile_owner_name_placeholder"
-                        android:textSize="16sp"
-                        android:textColor="@color/text_secondary"
-                        android:textStyle="normal"
-                        android:minHeight="24dp"
-                        android:gravity="center_vertical" />
+                         android:id="@+id/ownerName"
+                         style="@style/ProfileFieldValue"
+                         android:text="@string/profile_owner_name_placeholder"
+                         android:textColor="@color/profile_empty_text" />
 
                 </LinearLayout>
             </LinearLayout>
 
-        </LinearLayout>
+             </LinearLayout>
 
-        <!-- Sección de Intereses -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/profile_section_background"
-            android:padding="16dp">
+         </com.google.android.material.card.MaterialCardView>
+
+         <!-- Sección de Intereses -->
+             <com.google.android.material.card.MaterialCardView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:padding="28dp"
+                 app:cardCornerRadius="16dp"
+                 app:cardElevation="4dp"
+                 app:cardBackgroundColor="@color/white"
+                 app:cardUseCompatPadding="true">
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical"
+                 android:padding="24dp">
 
              <LinearLayout
                 android:layout_width="match_parent"
@@ -312,23 +376,24 @@
                 android:orientation="horizontal"
                 android:layout_marginBottom="12dp">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/profile_interests_section"
-                    android:textSize="18sp"
-                    android:textColor="@color/text_primary"
-                    android:textStyle="bold" />
+                 <TextView
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     style="@style/ProfileSectionTitle"
+                     android:text="@string/profile_interests_section"
+                     android:layout_marginBottom="0dp" />
 
-                <ImageButton
-                    android:id="@+id/editInterestsButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@drawable/edit_button_background"
-                    android:src="@drawable/ic_edit"
-                    android:contentDescription="@string/profile_edit_button"
-                    android:scaleType="centerInside" />
+                 <ImageButton
+                     android:id="@+id/editInterestsButton"
+                     android:layout_width="38dp"
+                     android:layout_height="38dp"
+                     android:background="@drawable/edit_button_background"
+                     android:src="@drawable/ic_edit"
+                     android:scaleType="centerInside"
+                     android:elevation="6dp"
+                     android:contentDescription="@string/profile_edit_button"
+                     android:tint="@color/white" />
 
             </LinearLayout>
 
@@ -347,23 +412,29 @@
                     android:layout_gravity="center_vertical" />
 
                  <TextView
-                    android:id="@+id/petInterests"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/profile_interests_placeholder"
-                    android:textSize="16sp"
-                    android:textColor="@color/text_secondary"
-                    android:background="@drawable/category_tag_background"
-                    android:padding="8dp"
-                    android:textAlignment="center"
-                    android:minHeight="32dp"
-                    android:gravity="center" />
+                     android:id="@+id/petInterests"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:text="@string/profile_interests_placeholder"
+                     style="@style/ProfileFieldValue"
+                     android:textColor="@color/profile_empty_text"
+                     android:background="@drawable/interests_badge_background"
+                     android:padding="16dp"
+                     android:textAlignment="center"
+                     android:minHeight="44dp"
+                     android:gravity="center"
+                     android:textSize="16sp"
+                     android:fontFamily="sans-serif-medium" />
 
             </LinearLayout>
 
-        </LinearLayout>
+             </LinearLayout>
 
-    </LinearLayout>
+         </com.google.android.material.card.MaterialCardView>
 
-</ScrollView>
+         </LinearLayout>
+
+     </ScrollView>
+
+ </LinearLayout>

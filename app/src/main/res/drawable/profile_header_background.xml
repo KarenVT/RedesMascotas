@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Header con gradiente para el perfil -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <gradient
         android:angle="135"
-        android:startColor="@color/primary_dark"
+        android:startColor="@color/blue_primary"
         android:centerColor="@color/primary"
         android:endColor="@color/primary_dark"
         android:type="linear" />
 </shape>
+
+
 

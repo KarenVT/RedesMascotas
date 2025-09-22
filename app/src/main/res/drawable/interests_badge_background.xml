@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Background aesthetic y minimalista para el badge de intereses -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Sombra interna muy sutil -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/surface_elevation_2" />
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+    
+    <!-- Gradiente muy sutil -->
+    <item android:left="1dp" android:top="1dp" android:right="1dp" android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="90"
+                android:startColor="@color/blue_light"
+                android:endColor="@color/surface_elevation_1"
+                android:type="linear" />
+            <corners android:radius="15dp" />
+        </shape>
+    </item>
+    
+    <!-- Borde muy sutil -->
+    <item>
+        <shape android:shape="rectangle">
+            <stroke 
+                android:width="0.5dp" 
+                android:color="@color/warm_beige" />
+            <corners android:radius="16dp" />
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+    
+</layer-list>

@@ -29,7 +29,7 @@
     <string name="profile_edit_interests">Editar intereses</string>
     <string name="profile_field_required">Este campo es requerido</string>
     <string name="profile_updated_success">Perfil actualizado exitosamente</string>
-    <string name="profile_empty_state">Completa tu perfil para una mejor experiencia en PawConnect</string>
+    <string name="profile_empty_state">¡Personaliza tu perfil!\nAgrega información de tu mascota para conectar mejor con otros dueños</string>
     <string name="profile_error_loading">Error al cargar el perfil</string>
     <string name="profile_error_saving">Error al guardar los datos</string>
     <string name="profile_change_image">Cambiar foto de perfil</string>

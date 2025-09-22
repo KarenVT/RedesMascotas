@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background">
+    android:background="@color/white">
 
     <!-- Header mejorado con gradiente -->
     <LinearLayout
@@ -44,206 +45,240 @@
 
     </LinearLayout>
 
-    <!-- Campo de búsqueda/URL con botones integrados -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
-
-        <EditText
-            android:id="@+id/et_url"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:hint="Escribe tu URL aquí..."
-            android:background="@drawable/edittext_background"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textSize="14sp"
-            android:inputType="textUri"
-            android:layout_marginEnd="8dp" />
-
-        <ImageButton
-            android:id="@+id/btn_save_url"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_add"
-            android:background="@drawable/save_button_background"
-            android:layout_marginEnd="8dp"
-            android:scaleType="centerInside" />
-        <Button
-            android:id="@+id/btn_go"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:text="IR"
-            android:textSize="12sp"
-            android:textColor="@color/white"
-            android:background="@drawable/button_primary_background"
-            style="@style/PawConnect.Button" />
-
-    </LinearLayout>
-
-    <!-- Barra de navegación del navegador -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        android:gravity="center_vertical"
-        android:background="@color/surface">
-
-        <ImageButton
-            android:id="@+id/btn_back"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_arrow_back"
-            android:background="@drawable/icon_button_background"
-            android:layout_marginEnd="8dp" />
-
-        <ImageButton
-            android:id="@+id/btn_forward"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_arrow_forward"
-            android:background="@drawable/icon_button_background"
-            android:layout_marginEnd="8dp" />
-
-        <ImageButton
-            android:id="@+id/btn_refresh"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_refresh"
-            android:background="@drawable/icon_button_background"
-            android:layout_marginEnd="16dp" />
-
-        <TextView
-            android:id="@+id/tv_current_url"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="https://veterinario.com"
-            android:textSize="12sp"
-            android:textColor="@color/text_secondary"
-        android:background="@drawable/url_display_background" 
-            android:singleLine="true"
-            android:ellipsize="middle"
-            android:padding="8dp"
-            />
-
-    </LinearLayout>
-
-    <!-- WebView para mostrar páginas web -->
-    <WebView
-        android:id="@+id/webview"
+    <!-- NestedScrollView que envuelve todo el contenido principal -->
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
 
-    <!-- Sección Enlaces guardados -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/surface"
-        android:padding="16dp">
-
-        <!-- Título de enlaces guardados -->
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enlaces guardados"
-            android:textSize="18sp"
-            android:textColor="@color/text_primary"
-            android:textStyle="bold"
-            android:layout_marginBottom="12dp" />
+            android:orientation="vertical">
 
-        <!-- Filtros por categoría -->
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:scrollbars="none">
-
+            <!-- Campo de búsqueda/URL con botones integrados -->
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_all"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:text="Todos"
-                    android:textSize="14sp"
-                    android:background="@drawable/category_button_background"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginEnd="8dp"
-                    android:minWidth="70dp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp" />
-
-                <Button
-                    android:id="@+id/btn_blog"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:text="Blog"
-                    android:textSize="14sp"
-                    android:background="@drawable/category_button_background"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginEnd="8dp"
-                    android:minWidth="70dp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp" />
-
-                <Button
-                    android:id="@+id/btn_petshop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:text="PetShop"
-                    android:textSize="14sp"
-                    android:background="@drawable/category_button_background"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginEnd="8dp"
-                    android:minWidth="80dp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp" />
-
-                <Button
-                    android:id="@+id/btn_veterinario"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:text="Veterinario"
-                    android:textSize="14sp"
-                    android:background="@drawable/category_button_background"
-                    android:textColor="@color/text_primary"
-                    android:minWidth="90dp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp" />
-
-            </LinearLayout>
-        </HorizontalScrollView>
-
-
-        <!-- Lista de enlaces guardados -->
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:fillViewport="true">
-
-            <LinearLayout
-                android:id="@+id/bookmarks_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
 
-                <!-- Los enlaces guardados se añadirán aquí dinámicamente -->
+                <EditText
+                    android:id="@+id/et_url"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:hint="Escribe tu URL aquí..."
+                    android:background="@drawable/edittext_background"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textSize="14sp"
+                    android:inputType="textUri"
+                    android:layout_marginEnd="8dp" />
+
+                <ImageButton
+                    android:id="@+id/btn_save_url"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_add"
+                    android:background="@drawable/save_button_background"
+                    android:layout_marginEnd="8dp"
+                    android:scaleType="centerInside" />
+                
+                <Button
+                    android:id="@+id/btn_go"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:text="IR"
+                    android:textSize="12sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_primary_background"
+                    style="@style/PawConnect.Button" />
 
             </LinearLayout>
 
-        </ScrollView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/divider_color"
+                android:layout_margin="16dp">
 
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <!-- Barra de navegación del navegador -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="8dp"
+                        android:gravity="center_vertical"
+                        android:background="@color/surface">
+
+                        <ImageButton
+                            android:id="@+id/btn_back"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/ic_arrow_back"
+                            android:background="@drawable/icon_button_background"
+                            android:layout_marginEnd="8dp" />
+
+                        <ImageButton
+                            android:id="@+id/btn_forward"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/ic_arrow_forward"
+                            android:background="@drawable/icon_button_background"
+                            android:layout_marginEnd="8dp" />
+
+                        <ImageButton
+                            android:id="@+id/btn_refresh"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/ic_refresh"
+                            android:background="@drawable/icon_button_background"
+                            android:layout_marginEnd="16dp" />
+
+                        <TextView
+                            android:id="@+id/tv_current_url"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Escribe una URL para navegar"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_secondary"
+                            android:background="@drawable/url_display_background" 
+                            android:singleLine="true"
+                            android:ellipsize="middle"
+                            android:padding="8dp" />
+
+                    </LinearLayout>
+
+                    <!-- WebView para mostrar páginas web -->
+                    <WebView
+                        android:id="@+id/webview"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Sección Enlaces guardados -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/surface"
+                android:padding="16dp">
+
+                <!-- Título de enlaces guardados -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Enlaces guardados"
+                    android:textSize="18sp"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Filtros por categoría -->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btn_all"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="Todos"
+                            android:textSize="14sp"
+                            android:background="@drawable/category_button_background"
+                            android:textColor="@color/text_primary"
+                            android:layout_marginEnd="8dp"
+                            android:minWidth="70dp"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp" />
+
+                        <Button
+                            android:id="@+id/btn_blog"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="Blog"
+                            android:textSize="14sp"
+                            android:background="@drawable/category_button_background"
+                            android:textColor="@color/text_primary"
+                            android:layout_marginEnd="8dp"
+                            android:minWidth="70dp"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp" />
+
+                        <Button
+                            android:id="@+id/btn_petshop"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="PetShop"
+                            android:textSize="14sp"
+                            android:background="@drawable/category_button_background"
+                            android:textColor="@color/text_primary"
+                            android:layout_marginEnd="8dp"
+                            android:minWidth="80dp"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp" />
+
+                        <Button
+                            android:id="@+id/btn_veterinario"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="Veterinario"
+                            android:textSize="14sp"
+                            android:background="@drawable/category_button_background"
+                            android:textColor="@color/text_primary"
+                            android:minWidth="90dp"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp" />
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <!-- Lista de enlaces guardados -->
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:fillViewport="true">
+
+                    <LinearLayout
+                        android:id="@+id/bookmarks_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Los enlaces guardados se añadirán aquí dinámicamente -->
+
+                    </LinearLayout>
+
+                </ScrollView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

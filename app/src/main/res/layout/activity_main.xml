@@ -26,9 +26,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/primary"
+                android:elevation="4dp"
                 app:title="PawConnect"
                 app:titleTextColor="@color/white"
-                app:titleTextAppearance="@style/PawConnect.Toolbar.Title" />
+                app:titleTextAppearance="@style/PawConnect.Toolbar.Title"
+
+                />
 
         </com.google.android.material.appbar.AppBarLayout>
 

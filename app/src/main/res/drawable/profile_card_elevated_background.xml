@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Background minimalista con mejor contraste para las tarjetas del perfil -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Sombra sutil más amplia -->
+    <item android:left="0dp" android:top="4dp" android:right="6dp" android:bottom="8dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#15000000" />
+            <corners android:radius="24dp" />
+        </shape>
+    </item>
+    
+    <!-- Capa de fondo con gradiente muy sutil -->
+    <item android:left="0dp" android:top="0dp" android:right="0dp" android:bottom="4dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="180"
+                android:startColor="@color/pure_white"
+                android:centerColor="@color/surface_elevation_1"
+                android:endColor="@color/pure_white"
+                android:type="linear" />
+            <corners android:radius="24dp" />
+        </shape>
+    </item>
+    
+    <!-- Borde sutil -->
+    <item android:left="1dp" android:top="1dp" android:right="1dp" android:bottom="5dp">
+        <shape android:shape="rectangle">
+            <stroke 
+                android:width="0.5dp" 
+                android:color="@color/divider_color" />
+            <corners android:radius="23dp" />
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+    
+</layer-list>
