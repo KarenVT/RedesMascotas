@@ -12,6 +12,13 @@ import android.webkit.WebViewClient
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.launch
+import com.group.redesmascotas.database.AllDatabase
+import com.group.redesmascotas.database.BookmarkEntity
+import com.group.redesmascotas.repository.BookmarkRepository
 
 // Este fragmento representa la sección de navegador web.
 class WebFragment : Fragment() {
@@ -32,11 +39,10 @@ class WebFragment : Fragment() {
     private lateinit var btnPetshop: Button
     private lateinit var btnVeterinario: Button
     
-    // Lista simple de enlaces guardados (en una app real usarías base de datos)
-    private val savedBookmarks = mutableListOf<Bookmark>()
+    // Repository para manejar bookmarks
+    private lateinit var bookmarkRepository: BookmarkRepository
+    private val savedBookmarks = mutableListOf<BookmarkEntity>()
     private var currentCategory = "Todos"
-    
-    data class Bookmark(val title: String, val url: String, val category: String)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,12 +56,12 @@ class WebFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         
         initializeViews(view)
+        initializeRepository()
         setupWebView()
         setupNavigationButtons()
         setupBookmarks()
         setupCategoryFilters()
-        loadDefaultBookmarks()
-        updateBookmarksDisplay()
+        observeBookmarks()
         
         // No cargar ninguna página por defecto, mostrar página en blanco
         tvCurrentUrl.text = "Escribe una URL para navegar"
@@ -77,6 +83,11 @@ class WebFragment : Fragment() {
         btnBlog = view.findViewById(R.id.btn_blog)
         btnPetshop = view.findViewById(R.id.btn_petshop)
         btnVeterinario = view.findViewById(R.id.btn_veterinario)
+    }
+    
+    private fun initializeRepository() {
+        val database = AllDatabase.getDatabase(requireContext())
+        bookmarkRepository = BookmarkRepository(database.bookmarkDao(), requireContext())
     }
     
     @SuppressLint("SetJavaScriptEnabled")
@@ -183,7 +194,7 @@ class WebFragment : Fragment() {
         }
 
         // Actualizar la vista de bookmarks según la categoría seleccionada
-        updateBookmarksDisplay()
+        updateBookmarksObserver()
     }
 
     private fun resetCategoryButtons() {
@@ -193,23 +204,31 @@ class WebFragment : Fragment() {
         btnVeterinario.isSelected = false
     }
     
-    private fun loadDefaultBookmarks() {
-        savedBookmarks.addAll(listOf(
-            Bookmark("Google", "https://www.google.com", "Todos"),
-            Bookmark("Blog Mascotas", "https://www.purina.es/blog", "Blog"),
-            Bookmark("Tienda Mascotas", "https://www.petshop.com", "PetShop"),
-            Bookmark("Veterinario Online", "https://www.veterinario.com", "Veterinario")
-        ))
+    private fun observeBookmarks() {
+        // Observar cambios en bookmarks usando Flow
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                bookmarkRepository.getBookmarksByCategory(currentCategory).collect { bookmarks ->
+                    savedBookmarks.clear()
+                    savedBookmarks.addAll(bookmarks)
+                    updateBookmarksDisplay()
+                }
+            }
+        }
     }
     
     private fun addBookmark(title: String, url: String, category: String) {
         // Verificar si ya existe
         val exists = savedBookmarks.any { it.url == url }
         if (!exists) {
-            val bookmark = Bookmark(title, url, category)
-            savedBookmarks.add(bookmark)
-            updateBookmarksDisplay()
-            showToast("Enlace guardado en $category")
+            viewLifecycleOwner.lifecycleScope.launch {
+                val result = bookmarkRepository.saveBookmark(title, url, category)
+                result.onSuccess {
+                    showToast("Enlace guardado en $category")
+                }.onFailure { exception ->
+                    showToast("Error al guardar enlace: ${exception.message}")
+                }
+            }
         } else {
             showToast("Este enlace ya está guardado")
         }
@@ -227,21 +246,28 @@ class WebFragment : Fragment() {
         alertDialog.show()
     }
     
+    private fun updateBookmarksObserver() {
+        // Cambiar el observer cuando cambie la categoría
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                bookmarkRepository.getBookmarksByCategory(currentCategory).collect { bookmarks ->
+                    savedBookmarks.clear()
+                    savedBookmarks.addAll(bookmarks)
+                    updateBookmarksDisplay()
+                }
+            }
+        }
+    }
+    
     private fun updateBookmarksDisplay() {
         bookmarksContainer.removeAllViews()
         
-        val filteredBookmarks = if (currentCategory == "Todos") {
-            savedBookmarks
-        } else {
-            savedBookmarks.filter { it.category == currentCategory }
-        }
-        
-        for (bookmark in filteredBookmarks) {
+        for (bookmark in savedBookmarks) {
             addBookmarkView(bookmark)
         }
         
         // Mostrar mensaje si no hay enlaces
-        if (filteredBookmarks.isEmpty()) {
+        if (savedBookmarks.isEmpty()) {
             val emptyView = TextView(context).apply {
                 text = "No hay enlaces guardados en esta categoría"
                 textSize = 14f
@@ -253,7 +279,7 @@ class WebFragment : Fragment() {
         }
     }
     
-    private fun addBookmarkView(bookmark: Bookmark) {
+    private fun addBookmarkView(bookmark: BookmarkEntity) {
         val bookmarkView = layoutInflater.inflate(R.layout.bookmark_item, bookmarksContainer, false)
         
         val tvTitle = bookmarkView.findViewById<TextView>(R.id.tv_bookmark_title)
@@ -292,14 +318,19 @@ class WebFragment : Fragment() {
         bookmarksContainer.addView(bookmarkView)
     }
     
-    private fun showDeleteConfirmation(bookmark: Bookmark) {
+    private fun showDeleteConfirmation(bookmark: BookmarkEntity) {
         val alertDialog = android.app.AlertDialog.Builder(requireContext())
         alertDialog.setTitle("Eliminar enlace")
         alertDialog.setMessage("¿Estás seguro de que quieres eliminar \"${bookmark.title}\"?")
         alertDialog.setPositiveButton("Eliminar") { _, _ ->
-            savedBookmarks.remove(bookmark)
-            updateBookmarksDisplay()
-            showToast("Enlace eliminado")
+            viewLifecycleOwner.lifecycleScope.launch {
+                val result = bookmarkRepository.deleteBookmark(bookmark)
+                result.onSuccess {
+                    showToast("Enlace eliminado")
+                }.onFailure { exception ->
+                    showToast("Error al eliminar enlace: ${exception.message}")
+                }
+            }
         }
         alertDialog.setNegativeButton("Cancelar", null)
         alertDialog.show()
