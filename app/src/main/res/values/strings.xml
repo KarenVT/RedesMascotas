@@ -2,4 +2,93 @@
     <string name="app_name">PawConnect</string>
     <string name="drawer_open">Abrir menú</string>
     <string name="drawer_close">Cerrar menú</string>
+    
+    <!-- Strings del perfil -->
+    <string name="profile_title">Perfil</string>
+    <string name="profile_info_section">Información</string>
+    <string name="profile_owner_section">Dueño</string>
+    <string name="profile_interests_section">Intereses</string>
+    <string name="profile_name_label">Nombre</string>
+    <string name="profile_breed_label">Raza</string>
+    <string name="profile_age_label">Edad</string>
+
+    
+    <!-- Strings para perfil dinámico -->
+    <string name="profile_pet_name_placeholder">Toca para agregar nombre</string>
+    <string name="profile_pet_breed_placeholder">Toca para agregar raza</string>
+    <string name="profile_pet_age_placeholder">Toca para agregar edad</string>
+    <string name="profile_owner_name_placeholder">Toca para agregar tu nombre</string>
+    <string name="profile_interests_placeholder">Toca para agregar intereses</string>
+    <string name="profile_edit_button">Editar</string>
+    <string name="profile_save_button">Guardar</string>
+    <string name="profile_cancel_button">Cancelar</string>
+    <string name="profile_edit_pet_name">Editar nombre de mascota</string>
+    <string name="profile_edit_pet_breed">Editar raza</string>
+    <string name="profile_edit_pet_age">Editar edad</string>
+    <string name="profile_edit_owner_name">Editar nombre del dueño</string>
+    <string name="profile_edit_interests">Editar intereses</string>
+    <string name="profile_field_required">Este campo es requerido</string>
+    <string name="profile_updated_success">Perfil actualizado exitosamente</string>
+    <string name="profile_empty_state">Completa tu perfil para una mejor experiencia en PawConnect</string>
+    <string name="profile_error_loading">Error al cargar el perfil</string>
+    <string name="profile_error_saving">Error al guardar los datos</string>
+    
+    <!-- Strings de la sección Fotos -->
+    <string name="photos_title">Fotos</string>
+    <string name="filter_all">Todos</string>
+    <string name="filter_favorites">Favoritos</string>
+    <string name="filter_with_friends">Con Amigos</string>
+    <string name="no_photos_message">Aún no has agregado fotos.\nToca el botón + para agregar tu primera foto y crear tu álbum personal.</string>
+    <string name="add_photo">Agregar foto</string>
+    <string name="edit_photo">Editar foto</string>
+    <string name="photo_description_paseando">Paseando</string>
+    <string name="photo_description_jugando">Jugando</string>
+    <string name="photo_description_durmiendo">Durmiendo</string>
+    <string name="photo_description_comiendo">Comiendo</string>
+    <string name="photo_description_entrenando">Entrenando</string>
+    <string name="photo_favorite_added">Agregado a favoritos</string>
+    <string name="photo_favorite_removed">Removido de favoritos</string>
+    <string name="photo_edit_dialog_title">Editar Foto</string>
+    <string name="photo_add_dialog_title">Agregar Nueva Foto</string>
+    <string name="photo_name_hint">Nombre o descripción de la foto</string>
+    <string name="photo_with_friends_option">Con Amigos</string>
+    <string name="photo_is_favorite_option">Marcar como favorito</string>
+    <string name="dialog_save">Guardar</string>
+    <string name="dialog_cancel">Cancelar</string>
+    <string name="photo_name_required">El nombre es requerido</string>
+    <string name="photo_updated_success">Foto actualizada exitosamente</string>
+    <string name="photo_added_success">Foto agregada exitosamente</string>
+    
+    <!-- Strings de la sección Interacciones -->
+    <string name="interactions_title">Interacciones</string>
+    <string name="follow_pet_button">Seguir Mascota</string>
+    <string name="like_button">Me Gusta</string>
+    <string name="comment_button">Comentar</string>
+    <string name="share_button">Compartir</string>
+    <string name="interactions_activity_title">Actividad de Interacciones</string>
+    <string name="select_interaction_subtitle">Selecciona una interacción</string>
+    
+    <!-- Strings de la sección Videos -->
+    <string name="videos_title">Videos</string>
+    <string name="videos_select_button">Seleccionar Video</string>
+    <string name="videos_loading">Cargando video...</string>
+    <string name="videos_play">Reproducir</string>
+    <string name="videos_volume">Volumen</string>
+    <string name="videos_fullscreen">Pantalla completa</string>
+    <string name="videos_uploaded_label">Video subido:</string>
+    <string name="videos_no_videos">No hay videos disponibles</string>
+    <string name="videos_error_playing">Error al reproducir video</string>
+    <string name="videos_fullscreen_soon">Pantalla completa próximamente</string>
+    <string name="videos_added_success">Video agregado exitosamente</string>
+    <string name="videos_error_processing">Error al procesar video</string>
+    <string name="videos_select_first">Selecciona un video primero</string>
+    <string name="video_default_tricks">Trucos y Habilidades</string>
+    <string name="video_default_walking">Paseando por el Parque</string>
+    <string name="videos_edit_name">Editar Nombre</string>
+    <string name="videos_delete">Eliminar</string>
+    <string name="videos_edit_title">Editar Video</string>
+    <string name="videos_updated_success">Video actualizado exitosamente</string>
+    <string name="videos_delete_title">Eliminar Video</string>
+    <string name="videos_delete_message">¿Estás seguro de eliminar este video?</string>
+    <string name="videos_deleted_success">Video eliminado exitosamente</string>
 </resources>
