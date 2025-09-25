@@ -18,7 +18,7 @@
     <string name="profile_pet_breed_placeholder">Toca para agregar raza</string>
     <string name="profile_pet_age_placeholder">Toca para agregar edad</string>
     <string name="profile_owner_name_placeholder">Toca para agregar tu nombre</string>
-    <string name="profile_interests_placeholder">Toca para agregar intereses</string>
+    <string name="profile_interests_placeholder">Toca para agregar múltiples intereses</string>
     <string name="profile_edit_button">Editar</string>
     <string name="profile_save_button">Guardar</string>
     <string name="profile_cancel_button">Cancelar</string>
@@ -41,7 +41,7 @@
     <string name="photos_title">Fotos</string>
     <string name="filter_all">Todos</string>
     <string name="filter_favorites">Favoritos</string>
-    <string name="filter_with_friends">Con Amigos</string>
+    <string name="filter_with_friends">Amigos</string>
     <string name="no_photos_message">Aún no has agregado fotos.\nToca el botón + para agregar tu primera foto y crear tu álbum personal.</string>
     <string name="add_photo">Agregar foto</string>
     <string name="edit_photo">Editar foto</string>
@@ -55,7 +55,7 @@
     <string name="photo_edit_dialog_title">Editar Foto</string>
     <string name="photo_add_dialog_title">Agregar Nueva Foto</string>
     <string name="photo_name_hint">Nombre o descripción de la foto</string>
-    <string name="photo_with_friends_option">Con Amigos</string>
+    <string name="photo_with_friends_option">Amigos</string>
     <string name="photo_is_favorite_option">Marcar como favorito</string>
     <string name="dialog_save">Guardar</string>
     <string name="dialog_cancel">Cancelar</string>

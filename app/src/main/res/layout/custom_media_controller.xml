@@ -25,17 +25,18 @@
         android:gravity="center_vertical">
 
         <!-- Tiempo actual -->
+
+        <!-- Botón retroceder -->
         <TextView
             android:id="@+id/time_current"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minWidth="40dp"
             android:text="00:00"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:minWidth="40dp"
-            android:gravity="center" />
+            android:textSize="14sp" />
 
-        <!-- Botón retroceder -->
         <ImageButton
             android:id="@+id/rew"
             android:layout_width="48dp"
@@ -72,22 +73,6 @@
             android:padding="8dp" />
 
         <!-- Tiempo total -->
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00:00"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:minWidth="40dp"
-            android:gravity="center"
-            android:layout_marginStart="8dp" />
-
-        <!-- Espacio flexible -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
 
         <!-- Botón volumen -->
         <ImageButton
@@ -99,6 +84,23 @@
             android:contentDescription="@string/videos_volume"
             android:scaleType="centerInside"
             android:padding="8dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <!-- Espacio flexible -->
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:minWidth="40dp"
+            android:text="00:00"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
 
         <!-- Botón pantalla completa (oculto por defecto para coincidir con la imagen) -->
         <ImageButton
