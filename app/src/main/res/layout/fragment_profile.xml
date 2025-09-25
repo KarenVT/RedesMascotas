@@ -21,7 +21,7 @@
              android:layout_height="56dp"
              android:src="@drawable/ic_profile"
              android:layout_marginBottom="12dp"
-             android:tint="@color/white" />
+             app:tint="@color/white" />
 
          <!-- Título principal -->
          <TextView
@@ -81,7 +81,7 @@
                  android:layout_height="64dp"
                  android:src="@drawable/ic_paw_logo"
                  android:layout_marginBottom="16dp"
-                 android:tint="@color/warm_beige"
+                 app:tint="@color/warm_beige"
                  android:alpha="0.7" />
 
              <TextView
@@ -119,26 +119,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                >
 
-    <TextView
-                     android:layout_width="0dp"
-                     android:layout_height="wrap_content"
-                     android:layout_weight="1"
-                     style="@style/ProfileSectionTitle"
-                     android:text="@string/profile_info_section"
-                     android:layout_marginBottom="0dp" />
+                <TextView
+                    style="@style/ProfileSectionTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/profile_info_section"
+                    android:layout_margin="4dp"
+                    />
 
                 <ImageButton
                     android:id="@+id/editInfoButton"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:background="@drawable/edit_button_background"
                     android:src="@drawable/ic_edit"
                     android:scaleType="centerInside"
-                    android:elevation="6dp"
+                    android:elevation="4dp"
                     android:contentDescription="@string/profile_edit_button"
-                    android:tint="@color/white" />
+                    android:layout_margin="4dp"
+                    />
 
             </LinearLayout>
 
@@ -170,7 +174,7 @@
                      android:contentDescription="@string/profile_change_image"
                      android:scaleType="centerInside"
                      android:elevation="8dp"
-                     android:tint="@color/white" />
+                     app:tint="@color/white" />
 
              </FrameLayout>
 
@@ -186,7 +190,8 @@
                     android:layout_height="24dp"
                     android:src="@drawable/ic_profile"
                     android:layout_marginEnd="8dp"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_gravity="center_vertical"
+                    app:tint="@color/background"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -218,7 +223,8 @@
                     android:layout_height="24dp"
                     android:src="@drawable/ic_paw_logo"
                     android:layout_marginEnd="8dp"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_gravity="center_vertical"
+                    app:tint="@color/black"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -296,7 +302,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="12dp">
+                android:layout_marginBottom="16dp">
 
                  <TextView
                      android:layout_width="0dp"
@@ -304,18 +310,21 @@
                      android:layout_weight="1"
                      style="@style/ProfileSectionTitle"
                      android:text="@string/profile_owner_section"
-                     android:layout_marginBottom="0dp" />
+                     android:layout_marginBottom="0dp"
+                     android:layout_margin="4dp"/>
 
                  <ImageButton
                      android:id="@+id/editOwnerButton"
-                     android:layout_width="38dp"
-                     android:layout_height="38dp"
+                     android:layout_width="32dp"
+                     android:layout_height="32dp"
                      android:background="@drawable/edit_button_background"
                      android:src="@drawable/ic_edit"
                      android:scaleType="centerInside"
-                     android:elevation="6dp"
+                     android:elevation="4dp"
                      android:contentDescription="@string/profile_edit_button"
-                     android:tint="@color/white" />
+                     android:layout_margin="4dp"
+
+                      />
 
             </LinearLayout>
 
@@ -329,7 +338,8 @@
                     android:layout_height="24dp"
                     android:src="@drawable/ic_profile"
                     android:layout_marginEnd="8dp"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_gravity="center_vertical"
+                    app:tint="@color/background" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -374,7 +384,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="12dp">
+                android:layout_marginBottom="16dp">
 
                  <TextView
                      android:layout_width="0dp"
@@ -382,18 +392,20 @@
                      android:layout_weight="1"
                      style="@style/ProfileSectionTitle"
                      android:text="@string/profile_interests_section"
-                     android:layout_marginBottom="0dp" />
+                     android:layout_marginBottom="0dp"
+                     android:layout_margin="4dp"/>
 
                  <ImageButton
                      android:id="@+id/editInterestsButton"
-                     android:layout_width="38dp"
-                     android:layout_height="38dp"
+                     android:layout_width="32dp"
+                     android:layout_height="32dp"
                      android:background="@drawable/edit_button_background"
                      android:src="@drawable/ic_edit"
                      android:scaleType="centerInside"
-                     android:elevation="6dp"
+                     android:elevation="4dp"
                      android:contentDescription="@string/profile_edit_button"
-                     android:tint="@color/white" />
+                     android:layout_margin="4dp"
+                     />
 
             </LinearLayout>
 
@@ -411,21 +423,39 @@
                     android:layout_marginEnd="8dp"
                     android:layout_gravity="center_vertical" />
 
-                 <TextView
-                     android:id="@+id/petInterests"
+                 <!-- Container para múltiples intereses -->
+                 <LinearLayout
                      android:layout_width="0dp"
                      android:layout_height="wrap_content"
                      android:layout_weight="1"
-                     android:text="@string/profile_interests_placeholder"
-                     style="@style/ProfileFieldValue"
-                     android:textColor="@color/profile_empty_text"
-                     android:background="@drawable/interests_badge_background"
-                     android:padding="16dp"
-                     android:textAlignment="center"
-                     android:minHeight="44dp"
-                     android:gravity="center"
-                     android:textSize="16sp"
-                     android:fontFamily="sans-serif-medium" />
+                     android:orientation="vertical">
+
+                     <!-- ChipGroup para múltiples intereses -->
+                     <com.google.android.material.chip.ChipGroup
+                         android:id="@+id/interestsChipGroup"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         app:chipSpacingHorizontal="8dp"
+                         app:chipSpacingVertical="4dp"
+                         app:singleLine="false"
+                         android:visibility="gone" />
+
+                     <!-- Placeholder cuando no hay intereses -->
+                     <TextView
+                         android:id="@+id/petInterests"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:text="@string/profile_interests_placeholder"
+                         android:textColor="@color/text_primary"
+                         android:background="@drawable/bookmark_item_background"
+                         android:padding="16dp"
+                         android:textAlignment="center"
+                         android:minHeight="44dp"
+                         android:gravity="center"
+                         android:textSize="14sp"
+                         android:fontFamily="sans-serif" />
+
+                 </LinearLayout>
 
             </LinearLayout>
 
@@ -437,4 +467,4 @@
 
      </ScrollView>
 
- </LinearLayout>
+</LinearLayout>

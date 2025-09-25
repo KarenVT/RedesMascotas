@@ -1,6 +1,7 @@
 package com.group.redesmascotas
 
 import android.app.AlertDialog
+import android.view.inputmethod.EditorInfo
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
 import com.group.redesmascotas.database.ProfileEntity
@@ -30,6 +33,7 @@ class ProfileFragment : Fragment() {
     private lateinit var petAgeText: TextView
     private lateinit var ownerNameText: TextView
     private lateinit var petInterestsText: TextView
+    private lateinit var interestsChipGroup: ChipGroup
     private lateinit var emptyStateMessage: TextView
     private lateinit var emptyStateContainer: com.google.android.material.card.MaterialCardView
     
@@ -91,6 +95,7 @@ class ProfileFragment : Fragment() {
         petAgeText = view.findViewById(R.id.petAge)
         ownerNameText = view.findViewById(R.id.ownerName)
         petInterestsText = view.findViewById(R.id.petInterests)
+        interestsChipGroup = view.findViewById(R.id.interestsChipGroup)
         emptyStateMessage = view.findViewById(R.id.emptyStateMessage)
         emptyStateContainer = view.findViewById(R.id.emptyStateContainer)
         
@@ -155,7 +160,9 @@ class ProfileFragment : Fragment() {
         displayFieldData(petBreedText, null, getString(R.string.profile_pet_breed_placeholder))
         displayFieldData(petAgeText, null, getString(R.string.profile_pet_age_placeholder))
         displayFieldData(ownerNameText, null, getString(R.string.profile_owner_name_placeholder))
-        displayFieldData(petInterestsText, null, getString(R.string.profile_interests_placeholder))
+        
+        // Mostrar placeholder de intereses
+        displayInterests("")
         
         // Configurar imagen por defecto
         loadProfileImage("")
@@ -169,7 +176,9 @@ class ProfileFragment : Fragment() {
         displayFieldData(petBreedText, profile.petBreed, getString(R.string.profile_pet_breed_placeholder))
         displayFieldData(petAgeText, profile.petAge, getString(R.string.profile_pet_age_placeholder))
         displayFieldData(ownerNameText, profile.ownerName, getString(R.string.profile_owner_name_placeholder))
-        displayFieldData(petInterestsText, profile.interests, getString(R.string.profile_interests_placeholder))
+        
+        // Manejar múltiples intereses
+        displayInterests(profile.interests)
         
         // Configurar imagen de perfil
         loadProfileImage(profile.profileImagePath)
@@ -263,15 +272,18 @@ class ProfileFragment : Fragment() {
     }
     
     private fun showEditInterestsDialog() {
-        showEditFieldDialog(
-            getString(R.string.profile_edit_interests),
-            getString(R.string.profile_interests_placeholder),
-            currentProfile?.interests ?: ""
-        ) { newValue ->
+        val currentInterestsString = currentProfile?.interests ?: ""
+        val currentInterestsList = parseInterestsFromString(currentInterestsString)
+        
+        // Crear diálogo personalizado para múltiples intereses
+        showMultipleInterestsDialog(currentInterestsList) { newInterestsList ->
+            val newInterestsString = formatInterestsToString(newInterestsList)
             lifecycleScope.launch {
-                val result = profileRepository.updateInterests(newValue)
+                val result = profileRepository.updateInterests(newInterestsString)
                 if (result.isSuccess) {
                     showSuccessMessage()
+                    // Forzar actualización inmediata de la UI
+                    displayInterests(newInterestsString)
                 } else {
                     showErrorMessage(getString(R.string.profile_error_saving))
                 }
@@ -382,6 +394,163 @@ class ProfileFragment : Fragment() {
             // Limpiar datos de la base de datos
             profileRepository.clearProfile()
         }
+    }
+    
+    // ======= FUNCIONES PARA MÚLTIPLES INTERESES =======
+    
+    private fun displayInterests(interestsString: String) {
+        val interestsList = parseInterestsFromString(interestsString)
+        
+        if (interestsList.isEmpty()) {
+            // Mostrar placeholder
+            petInterestsText.visibility = View.VISIBLE
+            interestsChipGroup.visibility = View.GONE
+            petInterestsText.text = getString(R.string.profile_interests_placeholder)
+            petInterestsText.setTextColor(resources.getColor(R.color.profile_empty_text, null))
+        } else {
+            // Mostrar chips
+            petInterestsText.visibility = View.GONE
+            interestsChipGroup.visibility = View.VISIBLE
+            createInterestChips(interestsList)
+        }
+    }
+    
+    private fun createInterestChips(interestsList: List<String>) {
+        // Limpiar chips existentes
+        interestsChipGroup.removeAllViews()
+        
+        // Crear chip para cada interés
+        interestsList.forEach { interest ->
+            val chip = Chip(requireContext())
+            chip.text = interest.trim()
+            chip.isCloseIconVisible = false
+            chip.isClickable = false
+            chip.setChipBackgroundColorResource(R.color.blue_light)
+            chip.setTextColor(resources.getColor(R.color.text_primary, null))
+            chip.chipStrokeColor = resources.getColorStateList(R.color.blue_primary, null)
+            chip.chipStrokeWidth = 2f
+            
+            interestsChipGroup.addView(chip)
+        }
+    }
+    
+    private fun parseInterestsFromString(interestsString: String): List<String> {
+        if (interestsString.isBlank()) return emptyList()
+        return interestsString.split(",")
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+    }
+    
+    private fun formatInterestsToString(interestsList: List<String>): String {
+        return interestsList.joinToString(",")
+    }
+    
+    private fun showMultipleInterestsDialog(
+        currentInterests: List<String>, 
+        onSave: (List<String>) -> Unit
+    ) {
+        val mutableInterests = currentInterests.toMutableList()
+        val editText = android.widget.EditText(requireContext()).apply {
+            hint = "Escribe un interés y presiona Enter"
+            setPadding(50, 30, 50, 30)
+        }
+        
+        val chipGroup = ChipGroup(requireContext()).apply {
+            chipSpacingHorizontal = 16
+            chipSpacingVertical = 8
+        }
+        
+        // Función para actualizar chips
+        fun updateChips() {
+            chipGroup.removeAllViews()
+            mutableInterests.forEachIndexed { index, interest ->
+                val chip = Chip(requireContext()).apply {
+                    text = interest.trim()
+                    isCloseIconVisible = true
+                    setChipBackgroundColorResource(R.color.blue_light)
+                    setTextColor(resources.getColor(R.color.text_primary, null))
+                    chipStrokeColor = resources.getColorStateList(R.color.blue_primary, null)
+                    chipStrokeWidth = 2f
+                    
+                    setOnCloseIconClickListener {
+                        if (index < mutableInterests.size) {
+                            mutableInterests.removeAt(index)
+                            updateChips()
+                        }
+                    }
+                }
+                chipGroup.addView(chip)
+            }
+        }
+        
+        updateChips()
+        
+        // Botón para agregar interés (más confiable que Enter)
+        val addButton = android.widget.Button(requireContext()).apply {
+            text = "Agregar"
+            setPadding(32, 16, 32, 16)
+            setBackgroundResource(R.color.blue_primary)
+            setTextColor(resources.getColor(R.color.white, null))
+        }
+        
+        // Función para agregar interés
+        val addInterest = {
+            val newInterest = editText.text.toString().trim()
+            if (newInterest.isNotEmpty() && !mutableInterests.contains(newInterest)) {
+                mutableInterests.add(newInterest)
+                editText.text.clear()
+                updateChips()
+            } else if (newInterest.isEmpty()) {
+                showErrorMessage("Escribe un interés")
+            } else {
+                showErrorMessage("Este interés ya existe")
+            }
+        }
+        
+        // Listener para Enter
+        editText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
+                addInterest()
+                true
+            } else false
+        }
+        
+        // Listener para botón
+        addButton.setOnClickListener { addInterest() }
+        
+        // Container para input + botón
+        val inputContainer = android.widget.LinearLayout(requireContext()).apply {
+            orientation = android.widget.LinearLayout.HORIZONTAL
+            addView(editText, android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                marginEnd = 16
+            })
+            addView(addButton)
+        }
+        
+        val container = android.widget.LinearLayout(requireContext()).apply {
+            orientation = android.widget.LinearLayout.VERTICAL
+            setPadding(50, 30, 50, 30)
+            addView(inputContainer)
+            addView(android.widget.TextView(requireContext()).apply {
+                text = "Intereses actuales (toca X para eliminar):"
+                setPadding(0, 20, 0, 10)
+                setTextColor(resources.getColor(R.color.text_secondary, null))
+                textSize = 14f
+            })
+            addView(chipGroup)
+        }
+        
+        AlertDialog.Builder(requireContext())
+            .setTitle("Editar Intereses")
+            .setView(container)
+            .setPositiveButton("Guardar") { _, _ ->
+                // Limpiar lista antes de guardar
+                val finalList = mutableInterests.map { it.trim() }.filter { it.isNotEmpty() }
+                onSave(finalList)
+            }
+            .setNegativeButton("Cancelar", null)
+            .setCancelable(true)
+            .show()
     }
     
     // Método estático para crear una nueva instancia del fragmento
