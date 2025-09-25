@@ -166,16 +166,16 @@ class PhotosFragment : Fragment() {
     private fun resetFilterButton(button: MaterialButton) {
         button.apply {
             setTextColor(requireContext().getColor(R.color.text_secondary))
-            backgroundTintList = requireContext().getColorStateList(R.color.background)
-            strokeColor = requireContext().getColorStateList(R.color.text_secondary)
+            backgroundTintList = requireContext().getColorStateList(R.color.white)
+            strokeColor = requireContext().getColorStateList(R.color.soft_gray)
         }
     }
 
     private fun activateFilterButton(button: MaterialButton) {
         button.apply {
-            setTextColor(requireContext().getColor(R.color.white))
-            backgroundTintList = requireContext().getColorStateList(R.color.accent)
-            strokeColor = requireContext().getColorStateList(R.color.accent)
+            setTextColor(requireContext().getColor(R.color.primary_text))
+            backgroundTintList = requireContext().getColorStateList(R.color.soft_gray)
+            strokeColor = requireContext().getColorStateList(R.color.soft_gray)
         }
     }
 

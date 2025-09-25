@@ -21,7 +21,7 @@
             android:layout_height="56dp"
             android:src="@drawable/ic_photos"
             android:layout_marginBottom="12dp"
-            android:tint="@color/white" />
+            app:tint="@color/white" />
 
         <!-- Título principal -->
         <TextView
@@ -106,71 +106,57 @@
 
                         </LinearLayout>
 
-                        <!-- Botones de filtros mejorados -->
-                        <LinearLayout
+                        <HorizontalScrollView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center">
+                            android:layout_marginBottom="12dp"
+                            android:scrollbars="none">
+
+                        <!-- Botones de filtros mejorados -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btnAllPhotos"
-                                style="@style/Widget.MaterialComponents.Button"
                                 android:layout_width="0dp"
                                 android:layout_height="48dp"
                                 android:layout_weight="1"
-                                android:ellipsize="none"
-                                android:singleLine="true"
+                                style="@style/PawConnect.Button"
                                 android:layout_marginEnd="8dp"
                                 android:text="@string/filter_all"
-                                android:textColor="@color/white"
                                 android:textSize="14sp"
-                                android:textStyle="bold"
-                                android:fontFamily="sans-serif-medium"
-                                android:backgroundTint="@color/accent"
-                                app:cornerRadius="22dp"
-                                android:elevation="4dp"
-                                android:paddingHorizontal="20dp"
                                 />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btnFavorites"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                style="@style/PawConnect.Button"
                                 android:layout_width="0dp"
                                 android:layout_height="48dp"
                                 android:layout_weight="1"
-                                android:ellipsize="end"
                                 android:singleLine="true"
-                                android:layout_marginHorizontal="4dp"
+                                android:ellipsize="none"
+                                android:layout_marginEnd="8dp"
                                 android:text="@string/filter_favorites"
-                                android:textColor="@color/text_primary"
                                 android:textSize="14sp"
-                                android:fontFamily="sans-serif-medium"
-                                app:cornerRadius="22dp"
-                                app:strokeColor="@color/accent"
-                                app:strokeWidth="2dp"
-                                android:paddingHorizontal="20dp"
                                 />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btnWithFriends"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                style="@style/PawConnect.Button"
                                 android:layout_width="0dp"
                                 android:layout_height="48dp"
                                 android:layout_weight="1"
-                                android:ellipsize="end"
                                 android:singleLine="true"
-                                android:layout_marginStart="8dp"
+                                android:ellipsize="none"
                                 android:text="@string/filter_with_friends"
                                 android:textColor="@color/text_primary"
                                 android:textSize="14sp"
-                                android:fontFamily="sans-serif-medium"
-                                app:cornerRadius="22dp"
-                                app:strokeColor="@color/accent"
-                                app:strokeWidth="2dp"
-                                android:paddingHorizontal="16dp"/>
+                                />
 
                         </LinearLayout>
+                        </HorizontalScrollView>
 
                     </LinearLayout>
 
@@ -221,7 +207,7 @@
                             android:scrollbars="vertical"
                             android:scrollbarStyle="outsideInset" />
 
-                        <!-- Estado vacío aesthetic -->
+                        <!-- Estado vacío -->
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/emptyStateContainer"
                             android:layout_width="match_parent"
@@ -244,7 +230,7 @@
                                     android:layout_height="120dp"
                                     android:src="@drawable/ic_photos"
                                     android:layout_marginBottom="20dp"
-                                    android:tint="@color/warm_beige"
+                                    app:tint="@color/warm_beige"
                                     android:alpha="0.7" />
 
                                 <TextView
@@ -269,7 +255,7 @@
 
         </ScrollView>
 
-        <!-- Botón flotante elegante -->
+        <!-- Botón flotante -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabAddPhoto"
             android:layout_width="wrap_content"

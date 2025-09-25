@@ -20,7 +20,7 @@
         <!-- Contenedor de imagen con overlay -->
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="135dp">
 
             <!-- Imagen de la foto -->
             <ImageView
@@ -117,22 +117,23 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="6dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                >
+
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipWithFriends"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
-                    android:text="Con Amigos"
-                    android:textSize="12sp"
-                    android:textColor="@color/secondary"
-                    app:chipBackgroundColor="@color/background"
-                    app:chipStrokeColor="@color/secondary"
+                    android:textAlignment="center"
+                    android:text="@string/filter_with_friends"
+                    android:textSize="10sp"
                     app:chipStrokeWidth="1dp"
                     app:chipCornerRadius="12dp"
-                    app:chipMinHeight="24dp"
-                    style="@style/Widget.MaterialComponents.Chip.Filter" />
+                    app:chipMinHeight="20dp"
+                    app:chipStrokeColor="@color/primary_dark"
+                    style="@style/PawConnect.Button.outline" />
 
             </LinearLayout>
 
