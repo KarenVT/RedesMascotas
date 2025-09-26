@@ -364,22 +364,32 @@ class ProfileFragment : Fragment() {
         }
     }
     
-    // Cargar imagen de perfil
+    // Cargar imagen de perfil con mejor adaptación circular
     private fun loadProfileImage(imagePath: String) {
         if (imagePath.isNotEmpty() && ImageUtils.imageExists(imagePath)) {
             try {
                 val bitmap = ImageUtils.loadImageFromInternalStorage(imagePath)
                 if (bitmap != null) {
+                    // Configurar ImageView para adaptación óptima
+                    profileImage.scaleType = android.widget.ImageView.ScaleType.CENTER_CROP
+                    profileImage.adjustViewBounds = false
                     profileImage.setImageBitmap(bitmap)
                 } else {
-                    profileImage.setImageResource(R.drawable.ic_paw_logo)
+                    loadDefaultProfileImage()
                 }
             } catch (e: Exception) {
-                profileImage.setImageResource(R.drawable.ic_paw_logo)
+                loadDefaultProfileImage()
             }
         } else {
-            profileImage.setImageResource(R.drawable.ic_paw_logo)
+            loadDefaultProfileImage()
         }
+    }
+    
+    // Cargar imagen por defecto con configuración optimizada
+    private fun loadDefaultProfileImage() {
+        profileImage.scaleType = android.widget.ImageView.ScaleType.CENTER_INSIDE
+        profileImage.adjustViewBounds = false
+        profileImage.setImageResource(R.drawable.ic_paw_logo)
     }
     
     // Método para limpiar todos los datos del perfil (útil para testing o reset)
