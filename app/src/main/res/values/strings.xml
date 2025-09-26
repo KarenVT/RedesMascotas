@@ -95,4 +95,12 @@
     <string name="videos_delete_title">Eliminar Video</string>
     <string name="videos_delete_message">¿Estás seguro de eliminar este video?</string>
     <string name="videos_deleted_success">Video eliminado exitosamente</string>
+
+
+    <!-- Strings de la sección Web    -->
+    <string name="web_blog_button">Blogs</string>
+    <string name="web_shop_button">Tiendas</string>
+    <string name="web_veterinary_button">Veterinarias</string>
+
+
 </resources>

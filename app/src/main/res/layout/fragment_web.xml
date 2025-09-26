@@ -21,7 +21,7 @@
             android:layout_height="48dp"
             android:src="@drawable/ic_web"
             android:layout_marginBottom="8dp"
-            android:tint="@color/white" />
+            app:tint="@color/white" />
 
         <!-- Título principal -->
     <TextView
@@ -104,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
                 app:cardCornerRadius="16dp"
-                android:padding="28dp"
+                android:padding="20dp"
                 app:cardElevation="4dp"
                 android:layout_margin="16dp"
                 app:cardBackgroundColor="@color/white"
@@ -179,7 +179,6 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="28dp"
                 android:layout_margin="14dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="16dp"
@@ -216,71 +215,66 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <Button
+                            <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btn_all"
-                                android:layout_width="wrap_content"
-                                android:layout_height="36dp"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:layout_weight="1"
+                                style="@style/PawConnect.Button"
                                 android:layout_marginEnd="8dp"
-                                android:background="@drawable/category_button_background"
-                                android:minWidth="70dp"
-                                android:paddingStart="16dp"
-                                android:paddingEnd="16dp"
-                                android:text="Todos"
-                                android:textColor="@color/white"
+                                android:text="@string/filter_all"
                                 android:textSize="14sp" />
 
-                            <Button
+                            <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btn_blog"
-                                android:layout_width="wrap_content"
-                                android:layout_height="36dp"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:layout_weight="1"
+                                style="@style/PawConnect.Button"
                                 android:layout_marginEnd="8dp"
-                                android:background="@drawable/category_button_background"
-                                android:minWidth="70dp"
-                                android:paddingStart="16dp"
-                                android:paddingEnd="16dp"
-                                android:text="Blog"
-                                android:textColor="@color/white"
+                                android:text="@string/web_blog_button"
                                 android:textSize="14sp" />
 
-                            <Button
+                            <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btn_petshop"
-                                android:layout_width="wrap_content"
-                                android:layout_height="36dp"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:layout_weight="1"
+                                style="@style/PawConnect.Button"
                                 android:layout_marginEnd="8dp"
-                                android:background="@drawable/category_button_background"
-                                android:minWidth="80dp"
-                                android:paddingStart="16dp"
-                                android:paddingEnd="16dp"
-                                android:text="PetShop"
-                                android:textColor="@color/white"
+                                android:text="@string/web_shop_button"
                                 android:textSize="14sp" />
 
-                            <Button
+                            <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btn_veterinario"
-                                android:layout_width="wrap_content"
-                                android:layout_height="36dp"
-                                android:background="@drawable/category_button_background"
-                                android:minWidth="90dp"
-                                android:paddingStart="16dp"
-                                android:paddingEnd="16dp"
-                                android:text="Veterinario"
-                                android:textColor="@color/white"
-                                android:textSize="14sp" />
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:layout_weight="1"
+                                android:singleLine="true"
+                                android:ellipsize="end"
+                                style="@style/PawConnect.Button"
+                                android:text="@string/web_veterinary_button"
+                                android:textSize="14sp"/>
 
                         </LinearLayout>
                     </HorizontalScrollView>
 
                     <!-- Lista de enlaces guardados -->
                     <ScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="160dp"
-                        android:fillViewport="true">
+                        android:id="@+id/bookmarks_scroll_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="300dp"
+                        android:scrollbars="vertical"
+                        android:scrollbarStyle="insideOverlay"
+                        android:fadeScrollbars="false"
+                        >
 
                         <LinearLayout
                             android:id="@+id/bookmarks_container"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_margin="20dp">
 
                             <!-- Los enlaces guardados se añadirán aquí dinámicamente -->
 

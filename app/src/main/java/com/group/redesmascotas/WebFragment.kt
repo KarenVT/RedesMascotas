@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
+import com.google.android.material.button.MaterialButton
 import com.group.redesmascotas.database.AllDatabase
 import com.group.redesmascotas.database.BookmarkEntity
 import com.group.redesmascotas.repository.BookmarkRepository
@@ -32,12 +33,13 @@ class WebFragment : Fragment() {
     private lateinit var tvCurrentUrl: TextView
     private lateinit var btnSaveUrl: ImageButton
     private lateinit var bookmarksContainer: LinearLayout
+    private lateinit var bookmarksScrollView: ScrollView
     
     // Botones de categorías
-    private lateinit var btnAll: Button
-    private lateinit var btnBlog: Button
-    private lateinit var btnPetshop: Button
-    private lateinit var btnVeterinario: Button
+    private lateinit var btnAll: MaterialButton
+    private lateinit var btnBlog: MaterialButton
+    private lateinit var btnPetshop: MaterialButton
+    private lateinit var btnVeterinario: MaterialButton
     
     // Repository para manejar bookmarks
     private lateinit var bookmarkRepository: BookmarkRepository
@@ -61,6 +63,7 @@ class WebFragment : Fragment() {
         setupNavigationButtons()
         setupBookmarks()
         setupCategoryFilters()
+        setupScrollViewTouch()
         observeBookmarks()
         
         // No cargar ninguna página por defecto, mostrar página en blanco
@@ -77,6 +80,7 @@ class WebFragment : Fragment() {
         tvCurrentUrl = view.findViewById(R.id.tv_current_url)
         btnSaveUrl = view.findViewById(R.id.btn_save_url)
         bookmarksContainer = view.findViewById(R.id.bookmarks_container)
+        bookmarksScrollView = view.findViewById(R.id.bookmarks_scroll_view)
         
         // Botones de categorías
         btnAll = view.findViewById(R.id.btn_all)
@@ -90,7 +94,7 @@ class WebFragment : Fragment() {
         bookmarkRepository = BookmarkRepository(database.bookmarkDao(), requireContext())
     }
     
-    @SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint("SetJavaScriptEnabled", "ClickableViewAccessibility")
     private fun setupWebView() {
         webView.settings.apply {
             javaScriptEnabled = true
@@ -193,37 +197,69 @@ class WebFragment : Fragment() {
 
     private fun setupCategoryFilters() {
         btnAll.setOnClickListener { filterByCategory("Todos") }
-        btnBlog.setOnClickListener { filterByCategory("Blog") }
-        btnPetshop.setOnClickListener { filterByCategory("PetShop") }
-        btnVeterinario.setOnClickListener { filterByCategory("Veterinario") }
+        btnBlog.setOnClickListener { filterByCategory("Blogs") }
+        btnPetshop.setOnClickListener { filterByCategory("Tiendas") }
+        btnVeterinario.setOnClickListener { filterByCategory("Veterinarias") }
 
         // Inicializar con "Todos" seleccionado
         filterByCategory("Todos")
     }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupScrollViewTouch() {
+        // Configurar el ScrollView para manejar correctamente el scroll táctil dentro del NestedScrollView padre
+        bookmarksScrollView.setOnTouchListener { v, event ->
+            when (event.action) {
+                android.view.MotionEvent.ACTION_DOWN -> {
+                    // Permitir que el ScrollView maneje su propio scroll
+                    v.parent.requestDisallowInterceptTouchEvent(true)
+                }
+                android.view.MotionEvent.ACTION_UP, 
+                android.view.MotionEvent.ACTION_CANCEL -> {
+                    // Devolver control al NestedScrollView padre cuando termine el gesto
+                    v.parent.requestDisallowInterceptTouchEvent(false)
+                }
+            }
+            false // Permitir que el ScrollView procese el evento normalmente
+        }
+    }
     
     private fun filterByCategory(category: String) {
         currentCategory = category
-
-        // Reset visual de botones
-        resetCategoryButtons()
-
-        // Marcar botón seleccionado y cambiar colores
-        when (category) {
-            "Todos" -> btnAll.isSelected = true
-            "Blog" -> btnBlog.isSelected = true
-            "PetShop" -> btnPetshop.isSelected = true
-            "Veterinario" -> btnVeterinario.isSelected = true
-        }
-
-        // Actualizar la vista de bookmarks según la categoría seleccionada
+        updateCategoryButtonsUI()
         updateBookmarksObserver()
     }
 
-    private fun resetCategoryButtons() {
-        btnAll.isSelected = false
-        btnBlog.isSelected = false
-        btnPetshop.isSelected = false
-        btnVeterinario.isSelected = false
+    private fun updateCategoryButtonsUI() {
+        // Resetear todos los botones
+        resetCategoryButton(btnAll)
+        resetCategoryButton(btnBlog)
+        resetCategoryButton(btnPetshop)
+        resetCategoryButton(btnVeterinario)
+        
+        // Activar el botón seleccionado
+        when (currentCategory) {
+            "Todos" -> activateCategoryButton(btnAll)
+            "Blogs" -> activateCategoryButton(btnBlog)
+            "Tiendas" -> activateCategoryButton(btnPetshop)
+            "Veterinarias" -> activateCategoryButton(btnVeterinario)
+        }
+    }
+
+    private fun resetCategoryButton(button: MaterialButton) {
+        button.apply {
+            setTextColor(requireContext().getColor(R.color.primary_text))
+            backgroundTintList = requireContext().getColorStateList(R.color.white)
+            strokeColor = requireContext().getColorStateList(R.color.soft_gray)
+        }
+    }
+
+    private fun activateCategoryButton(button: MaterialButton) {
+        button.apply {
+            setTextColor(requireContext().getColor(R.color.white))
+            backgroundTintList = requireContext().getColorStateList(R.color.blue_primary)
+            strokeColor = requireContext().getColorStateList(R.color.soft_gray)
+        }
     }
     
     private fun observeBookmarks() {
@@ -257,7 +293,7 @@ class WebFragment : Fragment() {
     }
     
     private fun showCategorySelectionDialog(title: String, url: String) {
-        val categories = arrayOf("Todos", "Blog", "PetShop", "Veterinario")
+        val categories = arrayOf("Todos", "Blogs", "Tiendas", "Veterinarias")
         
         val alertDialog = android.app.AlertDialog.Builder(requireContext())
         alertDialog.setTitle("Seleccionar categoría")
@@ -290,10 +326,10 @@ class WebFragment : Fragment() {
         
         // Mostrar mensaje si no hay enlaces
         if (savedBookmarks.isEmpty()) {
-            val emptyView = TextView(context).apply {
+            val emptyView = TextView(requireContext()).apply {
                 text = "No hay enlaces guardados en esta categoría"
                 textSize = 14f
-                setTextColor(resources.getColor(R.color.accent, null))
+                setTextColor(requireContext().resources.getColor(R.color.accent, null))
                 gravity = android.view.Gravity.CENTER
                 setPadding(16, 32, 16, 32)
             }
@@ -302,7 +338,7 @@ class WebFragment : Fragment() {
     }
     
     private fun addBookmarkView(bookmark: BookmarkEntity) {
-        val bookmarkView = layoutInflater.inflate(R.layout.bookmark_item, bookmarksContainer, false)
+        val bookmarkView = LayoutInflater.from(requireContext()).inflate(R.layout.bookmark_item, bookmarksContainer, false)
         
         val tvTitle = bookmarkView.findViewById<TextView>(R.id.tv_bookmark_title)
         val tvUrl = bookmarkView.findViewById<TextView>(R.id.tv_bookmark_url)
@@ -312,19 +348,6 @@ class WebFragment : Fragment() {
         tvTitle.text = bookmark.title
         tvUrl.text = bookmark.url
         tvCategory.text = bookmark.category
-        
-        // Color de categoría
-        when (bookmark.category) {
-            "Blog" -> tvCategory.setBackgroundResource(R.drawable.category_tag_background)
-
-            "PetShop" -> {
-                tvCategory.setBackgroundColor(resources.getColor(R.color.accent, null))
-            }
-            "Veterinario" -> {
-                tvCategory.setBackgroundColor(resources.getColor(R.color.background, null))
-            }
-            else -> tvCategory.setBackgroundResource(R.drawable.category_tag_background)
-        }
         
         // Click para navegar
         bookmarkView.setOnClickListener {
@@ -376,6 +399,6 @@ class WebFragment : Fragment() {
     }
     
     private fun showToast(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }

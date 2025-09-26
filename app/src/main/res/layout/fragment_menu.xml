@@ -18,21 +18,14 @@
         android:layout_marginBottom="16dp">
 
         <!-- Logo de la app -->
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_paw_logo"
-            android:layout_marginBottom="12dp" />
 
         <!-- Nombre de la app -->
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PawConnect"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-medium" />
+            android:layout_height="200dp"
+            android:src="@drawable/logo" />
+
+
 
     </LinearLayout>
 

@@ -13,7 +13,7 @@
         
         <!-- Colores de fondo -->
         <item name="android:colorBackground">@color/background</item>
-        <item name="android:windowBackground">@color/background</item>
+        <item name="android:windowBackground">@color/white</item>
         
         <!-- Barra de estado -->
         <item name="android:statusBarColor">@color/primary</item>

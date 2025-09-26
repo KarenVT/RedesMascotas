@@ -12,10 +12,10 @@
 
     <!-- Icono del enlace -->
     <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:src="@drawable/ic_bookmark"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="10dp"
         android:tint="@color/primary" />
 
     <!-- Contenido del enlace -->
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Título del enlace"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/text_primary"
             android:textStyle="bold"
             android:maxLines="1"
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="https://ejemplo.com"
-            android:textSize="12sp"
+            android:textSize="10sp"
             android:textColor="@color/text_secondary"
             android:maxLines="1"
             android:ellipsize="middle"
@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Blog"
-        android:textSize="10sp"
+        android:textSize="8sp"
         android:textColor="@color/white"
         android:background="@drawable/category_tag_background"
         android:paddingStart="8dp"
@@ -67,8 +67,8 @@
     <!-- Botón eliminar -->
     <ImageButton
         android:id="@+id/btn_delete_bookmark"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
         android:src="@drawable/ic_delete"
         android:background="@drawable/delete_button_background"
         android:layout_marginStart="8dp"
