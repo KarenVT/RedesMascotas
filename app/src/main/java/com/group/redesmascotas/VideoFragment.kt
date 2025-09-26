@@ -136,7 +136,7 @@ class VideoFragment : Fragment() {
             videoView.seekTo(newPos)
         }
         
-        customMediaController.onFullscreenToggle = { isFullscreen ->
+        customMediaController.onFullscreenToggle = { _ ->
             // TODO: Implementar funcionalidad de pantalla completa
             Toast.makeText(context, getString(R.string.videos_fullscreen_soon), Toast.LENGTH_SHORT).show()
         }
@@ -145,7 +145,17 @@ class VideoFragment : Fragment() {
         videoView.setOnPreparedListener { _ ->
             layoutVideoLoading.visibility = View.GONE
             customMediaController.testControls() // Mostrar por 10 segundos para testing
-            startProgressUpdate()
+            
+            // Actualizar el ícono basado en el estado actual
+            customMediaController.updateProgress(
+                videoView.currentPosition, 
+                videoView.duration, 
+                isPlaying
+            )
+            
+            if (isPlaying) {
+                startProgressUpdate()
+            }
         }
         
         // Tap en VideoView para mostrar/ocultar controles
@@ -160,13 +170,16 @@ class VideoFragment : Fragment() {
         videoView.setOnCompletionListener {
             isPlaying = false
             stopProgressUpdate()
-            customMediaController.updateProgress(0, videoView.duration, false)
+            // Mostrar el ícono de play cuando termine el video
+            customMediaController.updateProgress(videoView.duration, videoView.duration, false)
         }
         
-        videoView.setOnErrorListener { _, _, _ ->
-            Toast.makeText(context, getString(R.string.videos_error_playing), Toast.LENGTH_SHORT).show()
+        videoView.setOnErrorListener { _, what, _ ->
+            Toast.makeText(context, "${getString(R.string.videos_error_playing)} (Error: $what)", Toast.LENGTH_LONG).show()
             layoutVideoLoading.visibility = View.GONE
             customMediaController.hide()
+            isPlaying = false
+            stopProgressUpdate()
             true
         }
     }
@@ -226,7 +239,7 @@ class VideoFragment : Fragment() {
                         
                         Toast.makeText(context, getString(R.string.videos_added_success), Toast.LENGTH_SHORT).show()
                     },
-                    onFailure = { error ->
+                    onFailure = { _ ->
                         Toast.makeText(context, getString(R.string.videos_error_processing), Toast.LENGTH_LONG).show()
                     }
                 )
@@ -253,6 +266,8 @@ class VideoFragment : Fragment() {
     
     private fun playVideoFromUri(uri: Uri) {
         currentVideoUri = uri
+        isPlaying = false // Inicialmente pausado hasta que se presione play
+        
         // Mostrar reproductor y estado de carga
         layoutVideoPlayer.visibility = View.VISIBLE
         layoutVideoLoading.visibility = View.VISIBLE
@@ -264,6 +279,8 @@ class VideoFragment : Fragment() {
     
     private fun playVideoFromFilePath(filePath: String) {
         currentVideoUri = Uri.parse("file://$filePath")
+        isPlaying = false // Inicialmente pausado hasta que se presione play
+        
         // Mostrar reproductor y estado de carga
         layoutVideoPlayer.visibility = View.VISIBLE
         layoutVideoLoading.visibility = View.VISIBLE
@@ -287,12 +304,19 @@ class VideoFragment : Fragment() {
             startProgressUpdate()
         }
         isPlaying = !isPlaying
+        
+        // Actualizar inmediatamente el ícono del botón
+        customMediaController.updateProgress(
+            videoView.currentPosition, 
+            videoView.duration, 
+            isPlaying
+        )
     }
     
     private fun startProgressUpdate() {
         progressUpdateRunnable = object : Runnable {
             override fun run() {
-                if (isPlaying && videoView.isPlaying) {
+                if (isPlaying && videoView.isPlaying && videoView.duration > 0) {
                     val currentPosition = videoView.currentPosition
                     val duration = videoView.duration
                     customMediaController.updateProgress(currentPosition, duration, isPlaying)
@@ -424,7 +448,9 @@ class VideoFragment : Fragment() {
             .setMessage(getString(R.string.videos_delete_message))
             .setPositiveButton(getString(R.string.videos_delete)) { _, _ ->
                 // Si es el video actualmente reproduciéndose, detenerlo
-                if (currentVideoUri != null && video.internalPath == currentVideoUri.toString()) {
+                if (currentVideoUri != null && 
+                    (video.internalPath == currentVideoUri.toString() || 
+                     "file://${video.internalPath}" == currentVideoUri.toString())) {
                     stopCurrentVideo()
                 }
                 
@@ -463,7 +489,7 @@ class VideoFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         // Reanudar actualizaciones si el video estaba reproduciéndose
-        if (currentVideoUri != null && isPlaying) {
+        if (currentVideoUri != null && isPlaying && videoView.isPlaying) {
             startProgressUpdate()
         }
     }

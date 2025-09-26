@@ -18,6 +18,7 @@ class VideosAdapter(
     class VideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val videoIcon: ImageView = itemView.findViewById(R.id.ivVideoIcon)
         val videoName: TextView = itemView.findViewById(R.id.tvVideoName)
+        val videoInfo: TextView = itemView.findViewById(R.id.tvVideoInfo)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoViewHolder {
@@ -30,9 +31,10 @@ class VideosAdapter(
         val video = videos[position]
         
         holder.videoName.text = video.name
+        holder.videoInfo.text = "Video • Toca para reproducir"
         holder.videoIcon.setImageResource(R.drawable.ic_video_play)
         
-        // Click listeners
+        // Click listeners - sin cambio en la funcionalidad
         holder.itemView.setOnClickListener {
             onVideoClick(video)
         }

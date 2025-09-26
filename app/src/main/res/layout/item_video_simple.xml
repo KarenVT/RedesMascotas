@@ -1,36 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="12dp"
-    android:background="@drawable/profile_section_background"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginVertical="4dp"
-    android:minHeight="48dp"
-    android:gravity="center_vertical">
 
-    <!-- Icono de video -->
-    <ImageView
-        android:id="@+id/ivVideoIcon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_video_play"
-        android:layout_marginEnd="12dp"
-        android:contentDescription="@string/videos_play" />
+    android:layout_marginVertical="6dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardUseCompatPadding="false"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
 
-    <!-- Nombre del video -->
-    <TextView
-        android:id="@+id/tvVideoName"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Video name"
-        android:textSize="16sp"
-        android:textColor="@color/text_primary"
-        android:textStyle="normal"
-        android:maxLines="1"
-        android:ellipsize="end" />
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:minHeight="60dp"
+        android:gravity="center_vertical">
 
-</LinearLayout>
+        <!-- Thumbnail/Icono de video en un FrameLayout -->
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/edit_button_background">
+
+            <ImageView
+                android:id="@+id/ivVideoIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_video_play"
+                android:layout_gravity="center"
+                android:contentDescription="@string/videos_play"
+                />
+
+        </FrameLayout>
+
+        <!-- Información del video -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Nombre del video -->
+            <TextView
+                android:id="@+id/tvVideoName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Video name"
+                android:textSize="16sp"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Información adicional -->
+            <TextView
+                android:id="@+id/tvVideoInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Toca para reproducir"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary"
+                android:textStyle="normal"
+                android:fontFamily="sans-serif"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+        </LinearLayout>
+
+        <!-- Indicador visual -->
+        <ImageView
+            android:id="@+id/ivPlayIndicator"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_arrow_forward"
+            android:layout_marginStart="8dp"
+            android:contentDescription="Reproducir video"
+            app:tint="@color/text_secondary"
+            android:alpha="0.7" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
 

@@ -141,7 +141,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="24dp">
+                    android:padding="20dp">
 
                     <!-- Título del reproductor -->
                     <LinearLayout
@@ -174,15 +174,15 @@
                     <!-- VideoView con controles personalizados -->
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="240dp"
-                        android:background="@color/background"
-                        app:cardCornerRadius="12dp">
+                        android:layout_height="400dp"
+                        android:background="#000000">
 
                         <VideoView
                             android:id="@+id/videoView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center" />
+                            android:layout_gravity="center"
+                            android:keepScreenOn="true" />
 
                         <!-- Overlay de carga mejorado -->
                         <LinearLayout
@@ -274,7 +274,7 @@
                     android:scrollbars="vertical"
                     android:scrollbarStyle="outsideInset" />
 
-                <!-- Estado vacío aesthetic con Material Card -->
+                <!-- Estado vacío -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/layoutNoVideos"
                     android:layout_width="match_parent"

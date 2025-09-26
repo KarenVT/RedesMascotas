@@ -1,119 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#E6000000"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="8dp">
+    android:background="#80000000"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="16dp">
 
     <!-- Barra de progreso superior -->
+
+    <!-- Tiempo en la parte superior -->
+
+    <!-- Controles centrados -->
+
     <SeekBar
         android:id="@+id/mediacontroller_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:progressTint="@color/accent"
-        android:thumbTint="@color/accent"
-        android:max="1000" />
+        android:layout_marginBottom="20dp"
+        android:max="1000"
+        android:progressBackgroundTint="#40FFFFFF"
+        android:progressTint="@android:color/white"
+        android:splitTrack="false"
+        android:thumbTint="@android:color/white" />
 
-    <!-- Controles principales en una sola línea -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <!-- Tiempo actual -->
-
-        <!-- Botón retroceder -->
         <TextView
             android:id="@+id/time_current"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:minWidth="40dp"
+            android:fontFamily="sans-serif-medium"
             android:text="00:00"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
-        <ImageButton
-            android:id="@+id/rew"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_rewind"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Retroceder"
-            android:layout_marginHorizontal="8dp"
-            android:scaleType="centerInside"
-            android:padding="8dp" />
-
-        <!-- Botón play/pausa -->
-        <ImageButton
-            android:id="@+id/pause"
-            android:layout_width="56dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_pause"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Play/Pausa"
-            android:layout_marginHorizontal="4dp"
-            android:scaleType="centerInside"
-            android:padding="8dp" />
-
-        <!-- Botón avanzar -->
-        <ImageButton
-            android:id="@+id/ffwd"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_fast_forward"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Avanzar"
-            android:layout_marginHorizontal="8dp"
-            android:scaleType="centerInside"
-            android:padding="8dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text=" / "
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
 
         <!-- Tiempo total -->
-
-        <!-- Botón volumen -->
-        <ImageButton
-            android:id="@+id/volume_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_volume"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/videos_volume"
-            android:scaleType="centerInside"
-            android:padding="8dp" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-        <!-- Espacio flexible -->
         <TextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:gravity="center"
-            android:minWidth="40dp"
+            android:fontFamily="sans-serif-medium"
             android:text="00:00"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
-        <!-- Botón pantalla completa (oculto por defecto para coincidir con la imagen) -->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <!-- Botón retroceder -->
+        <ImageButton
+            android:id="@+id/rew"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/ic_rewind"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Retroceder 10 segundos"
+            android:scaleType="centerInside"
+            android:padding="16dp"
+            app:tint="@android:color/white" />
+
+        <!-- Botón play/pausa -->
+        <ImageButton
+            android:id="@+id/pause"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@drawable/ic_pause"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Reproducir/Pausar"
+            android:scaleType="centerInside"
+            android:padding="20dp"
+            app:tint="@android:color/white" />
+
+        <!-- Botón avanzar -->
+        <ImageButton
+            android:id="@+id/ffwd"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="24dp"
+            android:src="@drawable/ic_fast_forward"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Avanzar 10 segundos"
+            android:scaleType="centerInside"
+            android:padding="16dp"
+            app:tint="@android:color/white" />
+
+    </LinearLayout>
+
+    <!-- Controles secundarios (ocultos por defecto, para no saturar) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:visibility="gone">
+
+        <!-- Botón volumen -->
+        <ImageButton
+            android:id="@+id/volume_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_volume"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/videos_volume"
+            android:scaleType="centerInside"
+            android:padding="8dp"
+            android:layout_marginEnd="16dp"
+            app:tint="@android:color/white" />
+
+        <!-- Botón pantalla completa -->
         <ImageButton
             android:id="@+id/fullscreen_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_fullscreen"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/videos_fullscreen"
-            android:layout_marginStart="4dp"
             android:scaleType="centerInside"
             android:padding="8dp"
-            android:visibility="gone" />
+            app:tint="@android:color/white" />
 
     </LinearLayout>
 
